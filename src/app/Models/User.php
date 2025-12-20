@@ -2,15 +2,18 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Models\Contracts\HasAvatar;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser, HasAvatar
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, LogsActivity;
 
     /**
      * The attributes that are mass assignable.
@@ -21,6 +24,16 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'oab',
+        'oab_uf',
+        'specialties',
+        'phone',
+        'whatsapp',
+        'bio',
+        'avatar',
+        'website',
+        'linkedin',
+        'is_active',
     ];
 
     /**
@@ -43,6 +56,117 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'specialties' => 'array',
+            'is_active' => 'boolean',
+        ];
+    }
+
+    /**
+     * Configure activity log options.
+     */
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['name', 'email', 'oab', 'oab_uf', 'specialties', 'is_active'])
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs();
+    }
+
+    /**
+     * Check if user can access Filament panel.
+     */
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return $this->is_active;
+    }
+
+    /**
+     * Get the user's avatar URL for Filament.
+     */
+    public function getFilamentAvatarUrl(): ?string
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * Get OAB formatted (e.g., "OAB/SP 123.456")
+     */
+    public function getOabFormattedAttribute(): ?string
+    {
+        if (!$this->oab || !$this->oab_uf) {
+            return null;
+        }
+        return "OAB/{$this->oab_uf} {$this->oab}";
+    }
+
+    /**
+     * Get specialties as comma-separated string.
+     */
+    public function getSpecialtiesTextAttribute(): ?string
+    {
+        if (!$this->specialties || !is_array($this->specialties)) {
+            return null;
+        }
+        return implode(', ', $this->specialties);
+    }
+
+    /**
+     * List of Brazilian states for OAB registration.
+     */
+    public static function getOabStates(): array
+    {
+        return [
+            'AC' => 'Acre',
+            'AL' => 'Alagoas',
+            'AP' => 'Amapá',
+            'AM' => 'Amazonas',
+            'BA' => 'Bahia',
+            'CE' => 'Ceará',
+            'DF' => 'Distrito Federal',
+            'ES' => 'Espírito Santo',
+            'GO' => 'Goiás',
+            'MA' => 'Maranhão',
+            'MT' => 'Mato Grosso',
+            'MS' => 'Mato Grosso do Sul',
+            'MG' => 'Minas Gerais',
+            'PA' => 'Pará',
+            'PB' => 'Paraíba',
+            'PR' => 'Paraná',
+            'PE' => 'Pernambuco',
+            'PI' => 'Piauí',
+            'RJ' => 'Rio de Janeiro',
+            'RN' => 'Rio Grande do Norte',
+            'RS' => 'Rio Grande do Sul',
+            'RO' => 'Rondônia',
+            'RR' => 'Roraima',
+            'SC' => 'Santa Catarina',
+            'SP' => 'São Paulo',
+            'SE' => 'Sergipe',
+            'TO' => 'Tocantins',
+        ];
+    }
+
+    /**
+     * Common legal specialties in Brazil.
+     */
+    public static function getLegalSpecialties(): array
+    {
+        return [
+            'Direito Civil',
+            'Direito Trabalhista',
+            'Direito Criminal',
+            'Direito Previdenciário',
+            'Direito Tributário',
+            'Direito do Consumidor',
+            'Direito de Família',
+            'Direito Empresarial',
+            'Direito Administrativo',
+            'Direito Ambiental',
+            'Direito Imobiliário',
+            'Direito Digital',
+            'Direito Eleitoral',
+            'Direito Internacional',
+            'Direito Contratual',
         ];
     }
 }

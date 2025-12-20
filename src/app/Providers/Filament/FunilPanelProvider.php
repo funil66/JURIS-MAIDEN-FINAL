@@ -28,6 +28,7 @@ class FunilPanelProvider extends PanelProvider
             ->id('funil')
             ->path('funil')
             ->login()
+            ->profile()
             ->colors([
                 'primary' => Color::Amber,
             ])
