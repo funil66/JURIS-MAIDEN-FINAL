@@ -592,25 +592,58 @@ php artisan view:clear
 ## 🚀 PRÓXIMOS PASSOS
 
 ### Imediato (Hoje - 20/12/2025)
-- [ ] Finalizar configuração GitHub
-- [ ] Fazer primeiro commit
-- [ ] Testar todos os CRUDs manualmente
-- [ ] Criar seeder de dados de teste
+- [x] Finalizar configuração GitHub ✅
+- [x] Fazer primeiro commit ✅
+- [x] Testar todos os CRUDs manualmente ✅
+- [x] Criar seeder de dados de teste ✅
 
-### Esta Semana
-- [ ] Adicionar campos OAB ao User
-- [ ] Criar Trait HasUuid
-- [ ] Expandir campos do Service (tribunal, vara, comarca)
+### Sprint 11 (20/12/2025) - Estabilização
+- [x] Correção Livewire.js 404
+- [x] Correção service_date → scheduled_datetime
+- [x] Análise projetos anteriores
+- [x] Configuração repositório GitHub
+- [x] TestDataSeeder com 75 registros
+- [x] Documentação IMPLEMENTATION_LOG.md
 
-### Próxima Semana
-- [ ] Criar sistema de Templates de documentos
-- [ ] Categorização por Área do Direito
-- [ ] Relatório específico de Audiências
+### Sprint 12 (20/12/2025) - Campos OAB no User ✅
+- [x] Migration: add_oab_fields_to_users_table
+  - Campos: oab, oab_uf, specialties, phone, whatsapp, bio, avatar, website, linkedin, is_active
+- [x] User model: casts, métodos auxiliares (getOabFormattedAttribute, getSpecialtiesTextAttribute)
+- [x] User model: listas estáticas (getOabStates, getLegalSpecialties)
+- [x] EditProfile.php: página de edição de perfil com seções organizadas
+- [x] edit-profile.blade.php: view do perfil com informações da conta
+- [x] FunilPanelProvider: habilitado profile()
+- [x] Commit: "Sprint 12: Campos OAB e Página de Perfil"
+
+### Sprint 13 (20/12/2025) - Expandir Modelo Service ✅
+- [x] Migration: add_extended_fields_to_services_table
+  - Dados do Juízo: judge_name, court_secretary, court_phone, court_email
+  - Solicitante: requester_name, requester_email, requester_phone, requester_oab
+  - Deslocamento: travel_distance_km, travel_cost, travel_type, travel_notes
+  - Documentos: attachments, has_substabelecimento, has_procuracao, documents_received, documents_received_at
+  - Resultado: result_type, actual_datetime, result_summary, result_attachments
+  - Qualidade: client_rating, client_feedback, requires_followup, followup_notes
+- [x] Service model: 26 novos campos no fillable
+- [x] Service model: 12 novos casts (arrays, booleans, decimals, dates)
+- [x] Service model: métodos auxiliares (getTravelTypeOptions, getResultTypeOptions, getRatingOptions, etc)
+- [x] Service model: scopes (needsFollowup, missingDocuments)
+- [x] ServiceResource: 6 novas seções no formulário
+  - Dados do Juízo
+  - Solicitante
+  - Deslocamento
+  - Documentos (com FileUpload)
+  - Resultado (com FileUpload para comprovantes)
+  - Avaliação e Follow-up
+
+### Esta Semana (Próximos Sprints)
+- [ ] Sprint 14: Templates de Documentos
+- [ ] Sprint 15: Google Calendar integração
+- [ ] Sprint 16: Portal do Cliente
 
 ### Janeiro/2026
-- [ ] Portal do Cliente
-- [ ] Integração Google Calendar
-- [ ] WhatsApp API para notificações
+- [ ] Sprint 17: WhatsApp API para notificações
+- [ ] Sprint 18: Relatório específico de Audiências
+- [ ] Sprint 19: Dashboard avançado com métricas
 
 ---
 

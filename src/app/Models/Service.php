@@ -43,6 +43,32 @@ class Service extends Model
         'instructions',
         'result_notes',
         'internal_notes',
+        // Sprint 13: Campos estendidos
+        'judge_name',
+        'court_secretary',
+        'court_phone',
+        'court_email',
+        'requester_name',
+        'requester_email',
+        'requester_phone',
+        'requester_oab',
+        'travel_distance_km',
+        'travel_cost',
+        'travel_type',
+        'travel_notes',
+        'attachments',
+        'has_substabelecimento',
+        'has_procuracao',
+        'documents_received',
+        'documents_received_at',
+        'result_type',
+        'actual_datetime',
+        'result_summary',
+        'result_attachments',
+        'client_rating',
+        'client_feedback',
+        'requires_followup',
+        'followup_notes',
     ];
 
     protected $casts = [
@@ -53,6 +79,18 @@ class Service extends Model
         'agreed_price' => 'decimal:2',
         'expenses' => 'decimal:2',
         'total_price' => 'decimal:2',
+        // Sprint 13: Novos casts
+        'travel_distance_km' => 'decimal:2',
+        'travel_cost' => 'decimal:2',
+        'attachments' => 'array',
+        'result_attachments' => 'array',
+        'has_substabelecimento' => 'boolean',
+        'has_procuracao' => 'boolean',
+        'documents_received' => 'boolean',
+        'documents_received_at' => 'date',
+        'actual_datetime' => 'datetime',
+        'client_rating' => 'integer',
+        'requires_followup' => 'boolean',
     ];
 
     /**
@@ -276,5 +314,157 @@ class Service extends Model
         ]);
         
         return implode(' - ', $parts);
+    }
+
+    // ==========================================
+    // Sprint 13: Métodos auxiliares para campos estendidos
+    // ==========================================
+
+    /**
+     * Travel type labels
+     */
+    public static function getTravelTypeOptions(): array
+    {
+        return [
+            'none' => 'Sem Deslocamento',
+            'local' => 'Local (mesma cidade)',
+            'regional' => 'Regional (até 100km)',
+            'distant' => 'Distante (mais de 100km)',
+        ];
+    }
+
+    /**
+     * Result type labels
+     */
+    public static function getResultTypeOptions(): array
+    {
+        return [
+            'pending' => 'Aguardando',
+            'successful' => 'Realizado com Sucesso',
+            'partial' => 'Parcialmente Realizado',
+            'rescheduled' => 'Redesignado',
+            'cancelled_court' => 'Cancelado pelo Juízo',
+            'cancelled_party' => 'Cancelado pela Parte',
+            'failed' => 'Não Realizado',
+        ];
+    }
+
+    /**
+     * Result type colors
+     */
+    public static function getResultTypeColors(): array
+    {
+        return [
+            'pending' => 'warning',
+            'successful' => 'success',
+            'partial' => 'info',
+            'rescheduled' => 'gray',
+            'cancelled_court' => 'danger',
+            'cancelled_party' => 'danger',
+            'failed' => 'danger',
+        ];
+    }
+
+    /**
+     * Travel type colors
+     */
+    public static function getTravelTypeColors(): array
+    {
+        return [
+            'none' => 'gray',
+            'local' => 'info',
+            'regional' => 'warning',
+            'distant' => 'danger',
+        ];
+    }
+
+    /**
+     * Retorna custo total de viagem formatado
+     */
+    public function getFormattedTravelCostAttribute(): string
+    {
+        return 'R$ ' . number_format($this->travel_cost ?? 0, 2, ',', '.');
+    }
+
+    /**
+     * Verifica se tem documentos necessários
+     */
+    public function hasRequiredDocuments(): bool
+    {
+        return $this->documents_received;
+    }
+
+    /**
+     * Verifica se precisa de substabelecimento ou procuração
+     */
+    public function needsLegalDocuments(): bool
+    {
+        return $this->has_substabelecimento || $this->has_procuracao;
+    }
+
+    /**
+     * Retorna informações do solicitante formatadas
+     */
+    public function getRequesterInfoAttribute(): ?string
+    {
+        if (!$this->requester_name) {
+            return null;
+        }
+
+        $info = $this->requester_name;
+        if ($this->requester_oab) {
+            $info .= " (OAB: {$this->requester_oab})";
+        }
+        return $info;
+    }
+
+    /**
+     * Retorna informações do juízo formatadas
+     */
+    public function getCourtInfoAttribute(): ?string
+    {
+        if (!$this->judge_name) {
+            return null;
+        }
+
+        $info = "Juiz(a): {$this->judge_name}";
+        if ($this->court_secretary) {
+            $info .= " | Secretário(a): {$this->court_secretary}";
+        }
+        return $info;
+    }
+
+    /**
+     * Scope para serviços com follow-up pendente
+     */
+    public function scopeNeedsFollowup($query)
+    {
+        return $query->where('requires_followup', true)
+            ->where('status', '!=', 'cancelled');
+    }
+
+    /**
+     * Scope para serviços sem documentos
+     */
+    public function scopeMissingDocuments($query)
+    {
+        return $query->where(function ($q) {
+            $q->where('has_substabelecimento', true)
+              ->orWhere('has_procuracao', true);
+        })->where('documents_received', false);
+    }
+
+    /**
+     * Rating options
+     */
+    public static function getRatingOptions(): array
+    {
+        return [
+            1 => '⭐ Ruim',
+            2 => '⭐⭐ Regular',
+            3 => '⭐⭐⭐ Bom',
+            4 => '⭐⭐⭐⭐ Muito Bom',
+            5 => '⭐⭐⭐⭐⭐ Excelente',
+        ];
     }
 }

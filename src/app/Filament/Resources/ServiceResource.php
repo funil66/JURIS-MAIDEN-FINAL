@@ -8,6 +8,7 @@ use App\Models\Service;
 use App\Models\ServiceType;
 use App\Models\Client;
 use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
@@ -245,6 +246,186 @@ class ServiceResource extends Resource
                             ->label('Notas Internas')
                             ->rows(2)
                             ->placeholder('Anotações internas (não visíveis ao cliente)')
+                            ->columnSpanFull(),
+                    ]),
+
+                // ==========================================
+                // Sprint 13: Seções Estendidas
+                // ==========================================
+                
+                Forms\Components\Section::make('Dados do Juízo')
+                    ->description('Informações sobre o juiz e secretaria')
+                    ->icon('heroicon-o-scale')
+                    ->columns(2)
+                    ->collapsible()
+                    ->collapsed()
+                    ->schema([
+                        Forms\Components\TextInput::make('judge_name')
+                            ->label('Nome do(a) Juiz(a)')
+                            ->maxLength(255),
+
+                        Forms\Components\TextInput::make('court_secretary')
+                            ->label('Secretário(a) da Vara')
+                            ->maxLength(255),
+
+                        Forms\Components\TextInput::make('court_phone')
+                            ->label('Telefone do Fórum')
+                            ->tel()
+                            ->mask('(99) 9999-9999'),
+
+                        Forms\Components\TextInput::make('court_email')
+                            ->label('E-mail do Fórum')
+                            ->email()
+                            ->maxLength(255),
+                    ]),
+
+                Forms\Components\Section::make('Solicitante')
+                    ->description('Advogado ou escritório que solicitou o serviço')
+                    ->icon('heroicon-o-user-group')
+                    ->columns(2)
+                    ->collapsible()
+                    ->collapsed()
+                    ->schema([
+                        Forms\Components\TextInput::make('requester_name')
+                            ->label('Nome do Solicitante')
+                            ->maxLength(255),
+
+                        Forms\Components\TextInput::make('requester_oab')
+                            ->label('OAB do Solicitante')
+                            ->placeholder('Ex: SP 123.456')
+                            ->maxLength(20),
+
+                        Forms\Components\TextInput::make('requester_email')
+                            ->label('E-mail')
+                            ->email()
+                            ->maxLength(255),
+
+                        Forms\Components\TextInput::make('requester_phone')
+                            ->label('Telefone')
+                            ->tel()
+                            ->mask('(99) 99999-9999'),
+                    ]),
+
+                Forms\Components\Section::make('Deslocamento')
+                    ->description('Informações sobre viagem e custos de deslocamento')
+                    ->icon('heroicon-o-truck')
+                    ->columns(4)
+                    ->collapsible()
+                    ->collapsed()
+                    ->schema([
+                        Forms\Components\Select::make('travel_type')
+                            ->label('Tipo de Deslocamento')
+                            ->options(Service::getTravelTypeOptions())
+                            ->default('none'),
+
+                        Forms\Components\TextInput::make('travel_distance_km')
+                            ->label('Distância (km)')
+                            ->numeric()
+                            ->suffix('km')
+                            ->step(0.1),
+
+                        Forms\Components\TextInput::make('travel_cost')
+                            ->label('Custo de Deslocamento')
+                            ->numeric()
+                            ->prefix('R$')
+                            ->step(0.01)
+                            ->default(0),
+
+                        Forms\Components\Textarea::make('travel_notes')
+                            ->label('Observações de Viagem')
+                            ->rows(2)
+                            ->columnSpanFull(),
+                    ]),
+
+                Forms\Components\Section::make('Documentos')
+                    ->description('Controle de documentação necessária')
+                    ->icon('heroicon-o-document-text')
+                    ->columns(3)
+                    ->collapsible()
+                    ->collapsed()
+                    ->schema([
+                        Forms\Components\Toggle::make('has_substabelecimento')
+                            ->label('Possui Substabelecimento?')
+                            ->inline(false),
+
+                        Forms\Components\Toggle::make('has_procuracao')
+                            ->label('Possui Procuração?')
+                            ->inline(false),
+
+                        Forms\Components\Toggle::make('documents_received')
+                            ->label('Documentos Recebidos?')
+                            ->inline(false),
+
+                        Forms\Components\DatePicker::make('documents_received_at')
+                            ->label('Data Recebimento')
+                            ->native(false)
+                            ->visible(fn (Get $get) => $get('documents_received')),
+
+                        Forms\Components\FileUpload::make('attachments')
+                            ->label('Anexos')
+                            ->multiple()
+                            ->directory('service-attachments')
+                            ->acceptedFileTypes(['application/pdf', 'image/*', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'])
+                            ->maxSize(10240)
+                            ->columnSpanFull(),
+                    ]),
+
+                Forms\Components\Section::make('Resultado')
+                    ->description('Informações sobre a realização do serviço')
+                    ->icon('heroicon-o-clipboard-document-check')
+                    ->columns(2)
+                    ->collapsible()
+                    ->collapsed()
+                    ->schema([
+                        Forms\Components\Select::make('result_type')
+                            ->label('Tipo de Resultado')
+                            ->options(Service::getResultTypeOptions())
+                            ->default('pending'),
+
+                        Forms\Components\DateTimePicker::make('actual_datetime')
+                            ->label('Data/Hora Real da Realização')
+                            ->native(false)
+                            ->seconds(false),
+
+                        Forms\Components\Textarea::make('result_summary')
+                            ->label('Resumo do Resultado')
+                            ->rows(3)
+                            ->columnSpanFull(),
+
+                        Forms\Components\FileUpload::make('result_attachments')
+                            ->label('Comprovantes')
+                            ->multiple()
+                            ->directory('service-results')
+                            ->acceptedFileTypes(['application/pdf', 'image/*'])
+                            ->maxSize(10240)
+                            ->columnSpanFull(),
+                    ]),
+
+                Forms\Components\Section::make('Avaliação e Follow-up')
+                    ->description('Feedback do cliente e necessidade de acompanhamento')
+                    ->icon('heroicon-o-star')
+                    ->columns(2)
+                    ->collapsible()
+                    ->collapsed()
+                    ->schema([
+                        Forms\Components\Select::make('client_rating')
+                            ->label('Avaliação do Cliente')
+                            ->options(Service::getRatingOptions())
+                            ->placeholder('Sem avaliação'),
+
+                        Forms\Components\Toggle::make('requires_followup')
+                            ->label('Requer Acompanhamento?')
+                            ->inline(false),
+
+                        Forms\Components\Textarea::make('client_feedback')
+                            ->label('Feedback do Cliente')
+                            ->rows(2)
+                            ->columnSpanFull(),
+
+                        Forms\Components\Textarea::make('followup_notes')
+                            ->label('Notas de Acompanhamento')
+                            ->rows(2)
+                            ->visible(fn (Get $get) => $get('requires_followup'))
                             ->columnSpanFull(),
                     ]),
             ]);
