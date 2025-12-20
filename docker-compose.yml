@@ -1,0 +1,82 @@
+version: '3.8'
+
+services:
+  # Aplicação PHP + Laravel
+  app:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    container_name: logisticajus_app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./src:/var/www
+      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - logisticajus_network
+    depends_on:
+      - mysql
+      - redis
+
+  # Servidor Web Nginx
+  nginx:
+    image: nginx:alpine
+    container_name: logisticajus_nginx
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src:/var/www
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - logisticajus_network
+    depends_on:
+      - app
+
+  # Banco de Dados MySQL
+  mysql:
+    image: mysql:8.0
+    container_name: logisticajus_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE:-logisticajus}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-secret}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-secret}
+      MYSQL_USER: ${DB_USERNAME:-logisticajus}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - logisticajus_network
+
+  # Cache Redis
+  redis:
+    image: redis:alpine
+    container_name: logisticajus_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - logisticajus_network
+
+  # Email Testing (Mailpit)
+  mailpit:
+    image: axllent/mailpit
+    container_name: logisticajus_mailpit
+    restart: unless-stopped
+    ports:
+      - "1025:1025"   # SMTP
+      - "8025:8025"   # Web UI
+    networks:
+      - logisticajus_network
+
+networks:
+  logisticajus_network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+  redis_data:

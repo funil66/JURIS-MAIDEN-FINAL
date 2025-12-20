@@ -1,0 +1,26 @@
+# ============================================
+# LogísticaJus - Cloudflare Tunnel Configuration
+# ============================================
+# Copie este arquivo para ~/.cloudflared/config.yml
+# após criar o túnel com: cloudflared tunnel create logisticajus
+#
+# Substitua <TUNNEL_ID> pelo ID gerado durante a criação do túnel
+# ============================================
+
+tunnel: <TUNNEL_ID>
+credentials-file: /home/funil/.cloudflared/<TUNNEL_ID>.json
+
+ingress:
+  # Sistema Principal - LogísticaJus
+  - hostname: sistema.allissonsousa.adv.br
+    service: http://localhost:8080
+    originRequest:
+      noTLSVerify: true
+      connectTimeout: 30s
+      
+  # Mailpit (apenas para desenvolvimento - remover em produção)
+  # - hostname: mail.allissonsousa.adv.br
+  #   service: http://localhost:8025
+  
+  # Fallback - Requerido pelo Cloudflare
+  - service: http_status:404
