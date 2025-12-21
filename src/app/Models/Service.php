@@ -16,6 +16,7 @@ class Service extends Model
 
     protected $fillable = [
         'code',
+        'order_number',
         'client_id',
         'service_type_id',
         'process_number',
@@ -112,6 +113,7 @@ class Service extends Model
         parent::boot();
 
         static::creating(function ($service) {
+            // Gerar código anual (SRV-YYYY-NNNN)
             if (empty($service->code)) {
                 $year = date('Y');
                 $lastService = static::whereYear('created_at', $year)
@@ -123,6 +125,12 @@ class Service extends Model
                     : 1;
                 
                 $service->code = sprintf('SRV-%s-%04d', $year, $nextNumber);
+            }
+
+            // Gerar número de ordem global único
+            if (empty($service->order_number)) {
+                $lastOrderNumber = static::withTrashed()->max('order_number') ?? 0;
+                $service->order_number = $lastOrderNumber + 1;
             }
 
             // Calcular total

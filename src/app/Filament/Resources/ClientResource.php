@@ -278,8 +278,9 @@ class ClientResource extends Resource
                     ->label('Excluídos'),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make()
+                    ->label('Ver Resumo'),
                 Tables\Actions\ActionGroup::make([
-                    Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make(),
                     Tables\Actions\DeleteAction::make(),
                     Tables\Actions\RestoreAction::make(),
@@ -305,11 +306,20 @@ class ClientResource extends Resource
         ];
     }
 
+    public static function getWidgets(): array
+    {
+        return [
+            ClientResource\Widgets\ClientServicesWidget::class,
+            ClientResource\Widgets\ClientTransactionsWidget::class,
+        ];
+    }
+
     public static function getPages(): array
     {
         return [
             'index' => Pages\ListClients::route('/'),
             'create' => Pages\CreateClient::route('/create'),
+            'view' => Pages\ViewClient::route('/{record}'),
             'edit' => Pages\EditClient::route('/{record}/edit'),
         ];
     }

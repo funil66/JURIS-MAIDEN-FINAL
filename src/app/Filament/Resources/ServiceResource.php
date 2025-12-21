@@ -435,6 +435,13 @@ class ServiceResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('order_number')
+                    ->label('Ordem')
+                    ->sortable()
+                    ->badge()
+                    ->color('gray')
+                    ->prefix('#'),
+
                 Tables\Columns\TextColumn::make('code')
                     ->label('Código')
                     ->searchable()
@@ -446,7 +453,8 @@ class ServiceResource extends Resource
                     ->label('Cliente')
                     ->searchable()
                     ->sortable()
-                    ->limit(25),
+                    ->limit(25)
+                    ->url(fn ($record) => route('filament.funil.resources.clients.view', $record->client_id)),
 
                 Tables\Columns\TextColumn::make('serviceType.name')
                     ->label('Tipo')
