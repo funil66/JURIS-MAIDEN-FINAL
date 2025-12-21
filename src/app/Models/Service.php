@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 
@@ -156,6 +157,14 @@ class Service extends Model
     public function serviceType(): BelongsTo
     {
         return $this->belongsTo(ServiceType::class);
+    }
+
+    /**
+     * Relacionamento com eventos sincronizados no Google Calendar
+     */
+    public function googleCalendarEvents(): MorphMany
+    {
+        return $this->morphMany(GoogleCalendarEvent::class, 'eventable');
     }
 
     /**

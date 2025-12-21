@@ -6,6 +6,7 @@ use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Activitylog\LogOptions;
@@ -34,6 +35,10 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
         'website',
         'linkedin',
         'is_active',
+        'google_access_token',
+        'google_refresh_token',
+        'google_token_expires_at',
+        'google_calendar_id',
     ];
 
     /**
@@ -58,6 +63,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
             'password' => 'hashed',
             'specialties' => 'array',
             'is_active' => 'boolean',
+            'google_token_expires_at' => 'datetime',
         ];
     }
 
@@ -168,5 +174,61 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
             'Direito Internacional',
             'Direito Contratual',
         ];
+    }
+
+    /**
+     * Relacionamento com eventos do Google Calendar
+     */
+    public function googleCalendarEvents(): HasMany
+    {
+        return $this->hasMany(GoogleCalendarEvent::class);
+    }
+
+    /**
+     * Verificar se está conectado ao Google Calendar
+     */
+    public function isGoogleCalendarConnected(): bool
+    {
+        return !empty($this->google_access_token) && !empty($this->google_refresh_token);
+    }
+
+    /**
+     * Verificar se o token do Google está expirado
+     */
+    public function isGoogleTokenExpired(): bool
+    {
+        if (!$this->google_token_expires_at) {
+            return true;
+        }
+        return $this->google_token_expires_at->isPast();
+    }
+
+    /**
+     * Salvar tokens do Google
+     */
+    public function saveGoogleTokens(array $tokens): void
+    {
+        $this->update([
+            'google_access_token' => $tokens['access_token'],
+            'google_refresh_token' => $tokens['refresh_token'] ?? $this->google_refresh_token,
+            'google_token_expires_at' => isset($tokens['expires_in'])
+                ? now()->addSeconds($tokens['expires_in'])
+                : now()->addHour(),
+        ]);
+    }
+
+    /**
+     * Remover conexão do Google Calendar
+     */
+    public function disconnectGoogleCalendar(): void
+    {
+        $this->update([
+            'google_access_token' => null,
+            'google_refresh_token' => null,
+            'google_token_expires_at' => null,
+            'google_calendar_id' => null,
+        ]);
+
+        $this->googleCalendarEvents()->delete();
     }
 }
