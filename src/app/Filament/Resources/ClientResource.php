@@ -187,6 +187,39 @@ class ClientResource extends Resource
                             ->default(true)
                             ->helperText('Desative para ocultar o cliente das listas'),
                     ]),
+
+                Forms\Components\Section::make('Acesso ao Portal')
+                    ->description('Configure o acesso do cliente ao portal de acompanhamento')
+                    ->icon('heroicon-o-computer-desktop')
+                    ->collapsible()
+                    ->collapsed()
+                    ->columns(2)
+                    ->schema([
+                        Forms\Components\Toggle::make('portal_access')
+                            ->label('Habilitar Acesso ao Portal')
+                            ->helperText('Permite que o cliente acesse o portal para acompanhar serviços')
+                            ->live()
+                            ->columnSpanFull(),
+
+                        Forms\Components\TextInput::make('password')
+                            ->label('Senha do Portal')
+                            ->password()
+                            ->dehydrateStateUsing(fn ($state) => filled($state) ? bcrypt($state) : null)
+                            ->dehydrated(fn ($state) => filled($state))
+                            ->required(fn (Get $get, string $operation): bool => $operation === 'create' && $get('portal_access'))
+                            ->visible(fn (Get $get): bool => $get('portal_access'))
+                            ->helperText('Deixe em branco para manter a senha atual'),
+
+                        Forms\Components\Placeholder::make('portal_info')
+                            ->label('URL do Portal')
+                            ->content(fn (): string => config('app.url') . '/portal')
+                            ->visible(fn (Get $get): bool => $get('portal_access')),
+
+                        Forms\Components\Placeholder::make('portal_last_login')
+                            ->label('Último Login')
+                            ->content(fn ($record): string => $record?->portal_last_login_at?->format('d/m/Y H:i') ?? 'Nunca')
+                            ->visible(fn ($record): bool => $record?->portal_access ?? false),
+                    ]),
             ]);
     }
 
@@ -239,6 +272,15 @@ class ClientResource extends Resource
                     ->boolean()
                     ->trueIcon('heroicon-o-check-circle')
                     ->falseIcon('heroicon-o-x-circle'),
+
+                Tables\Columns\IconColumn::make('portal_access')
+                    ->label('Portal')
+                    ->boolean()
+                    ->trueIcon('heroicon-o-computer-desktop')
+                    ->falseIcon('heroicon-o-minus-circle')
+                    ->trueColor('success')
+                    ->falseColor('gray')
+                    ->toggleable(),
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Cadastrado em')
