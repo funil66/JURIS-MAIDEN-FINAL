@@ -322,6 +322,13 @@ class ClientResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make()
                     ->label('Ver Resumo'),
+                Tables\Actions\Action::make('whatsapp')
+                    ->label('WhatsApp')
+                    ->icon('heroicon-o-chat-bubble-left-ellipsis')
+                    ->color('success')
+                    ->visible(fn (Client $record): bool => !empty($record->whatsapp) || !empty($record->phone))
+                    ->url(fn (Client $record): string => 'https://wa.me/55' . preg_replace('/[^0-9]/', '', $record->whatsapp ?? $record->phone))
+                    ->openUrlInNewTab(),
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\EditAction::make(),
                     Tables\Actions\DeleteAction::make(),
