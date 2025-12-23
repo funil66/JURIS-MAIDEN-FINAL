@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasGlobalUid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -9,7 +10,15 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class GoogleCalendarEvent extends Model
 {
-    use HasFactory;
+    use HasFactory, HasGlobalUid;
+
+    /**
+     * Prefixo do UID para Eventos Google Calendar
+     */
+    public static function getUidPrefix(): string
+    {
+        return 'GCE';
+    }
 
     protected $fillable = [
         'user_id',

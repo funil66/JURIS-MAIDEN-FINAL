@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasGlobalUid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,7 +14,15 @@ use Spatie\Activitylog\LogOptions;
 
 class DocumentTemplate extends Model
 {
-    use HasFactory, SoftDeletes, LogsActivity;
+    use HasFactory, SoftDeletes, LogsActivity, HasGlobalUid;
+
+    /**
+     * Prefixo do UID para Templates
+     */
+    public static function getUidPrefix(): string
+    {
+        return 'TPL';
+    }
 
     protected $fillable = [
         'name',

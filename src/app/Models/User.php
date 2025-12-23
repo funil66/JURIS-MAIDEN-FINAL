@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasGlobalUid;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
 use Filament\Panel;
@@ -14,7 +15,15 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class User extends Authenticatable implements FilamentUser, HasAvatar
 {
-    use HasFactory, Notifiable, LogsActivity;
+    use HasFactory, Notifiable, LogsActivity, HasGlobalUid;
+
+    /**
+     * Prefixo do UID para Usuários
+     */
+    public static function getUidPrefix(): string
+    {
+        return 'USR';
+    }
 
     /**
      * The attributes that are mass assignable.

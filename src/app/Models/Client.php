@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasGlobalUid;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -14,7 +15,15 @@ use Spatie\Activitylog\LogOptions;
 
 class Client extends Authenticatable implements FilamentUser
 {
-    use HasFactory, SoftDeletes, LogsActivity, Notifiable;
+    use HasFactory, SoftDeletes, LogsActivity, Notifiable, HasGlobalUid;
+
+    /**
+     * Prefixo do UID para Clientes
+     */
+    public static function getUidPrefix(): string
+    {
+        return 'CLI';
+    }
 
     protected $fillable = [
         'type',

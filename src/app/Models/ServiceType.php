@@ -2,13 +2,22 @@
 
 namespace App\Models;
 
+use App\Traits\HasGlobalUid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ServiceType extends Model
 {
-    use HasFactory;
+    use HasFactory, HasGlobalUid;
+
+    /**
+     * Prefixo do UID para Tipos de Serviço
+     */
+    public static function getUidPrefix(): string
+    {
+        return 'TPS';
+    }
 
     protected $fillable = [
         'name',

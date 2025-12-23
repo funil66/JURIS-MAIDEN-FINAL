@@ -227,6 +227,15 @@ class ClientResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('uid')
+                    ->label('ID')
+                    ->searchable()
+                    ->sortable()
+                    ->copyable()
+                    ->copyMessage('ID copiado!')
+                    ->badge()
+                    ->color('primary'),
+
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nome')
                     ->searchable()

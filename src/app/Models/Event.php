@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasGlobalUid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,7 +13,15 @@ use Spatie\Activitylog\LogOptions;
 
 class Event extends Model
 {
-    use HasFactory, SoftDeletes, LogsActivity;
+    use HasFactory, SoftDeletes, LogsActivity, HasGlobalUid;
+
+    /**
+     * Prefixo do UID para Eventos
+     */
+    public static function getUidPrefix(): string
+    {
+        return 'EVT';
+    }
 
     protected $fillable = [
         'title',

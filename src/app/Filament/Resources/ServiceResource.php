@@ -435,19 +435,22 @@ class ServiceResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('order_number')
-                    ->label('Ordem')
+                Tables\Columns\TextColumn::make('uid')
+                    ->label('ID')
+                    ->searchable()
                     ->sortable()
+                    ->copyable()
+                    ->copyMessage('ID copiado!')
                     ->badge()
-                    ->color('gray')
-                    ->prefix('#'),
+                    ->color('primary'),
 
                 Tables\Columns\TextColumn::make('code')
                     ->label('Código')
                     ->searchable()
                     ->sortable()
                     ->copyable()
-                    ->weight('bold'),
+                    ->weight('bold')
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 Tables\Columns\TextColumn::make('client.name')
                     ->label('Cliente')
