@@ -87,6 +87,14 @@ class Client extends Authenticatable implements FilamentUser
     }
 
     /**
+     * Processos do cliente
+     */
+    public function processes(): HasMany
+    {
+        return $this->hasMany(Process::class);
+    }
+
+    /**
      * Eventos do cliente
      */
     public function events(): HasMany

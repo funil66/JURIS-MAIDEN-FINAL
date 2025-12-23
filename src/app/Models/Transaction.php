@@ -27,6 +27,7 @@ class Transaction extends Model
         'type',
         'service_id',
         'client_id',
+        'process_id',
         'payment_method_id',
         'category',
         'amount',
@@ -124,6 +125,14 @@ class Transaction extends Model
     public function client(): BelongsTo
     {
         return $this->belongsTo(Client::class);
+    }
+
+    /**
+     * Processo relacionado
+     */
+    public function process(): BelongsTo
+    {
+        return $this->belongsTo(Process::class);
     }
 
     /**

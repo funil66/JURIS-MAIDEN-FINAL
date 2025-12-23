@@ -34,6 +34,7 @@ class Event extends Model
         'recurrence_end',
         'service_id',
         'client_id',
+        'process_id',
         'location',
         'location_address',
         'color',
@@ -79,6 +80,14 @@ class Event extends Model
     public function client(): BelongsTo
     {
         return $this->belongsTo(Client::class);
+    }
+
+    /**
+     * Relacionamento com Processo
+     */
+    public function process(): BelongsTo
+    {
+        return $this->belongsTo(Process::class);
     }
 
     /**

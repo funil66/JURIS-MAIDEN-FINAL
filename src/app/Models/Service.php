@@ -29,6 +29,7 @@ class Service extends Model
         'order_number',
         'client_id',
         'service_type_id',
+        'process_id',
         'process_number',
         'court',
         'jurisdiction',
@@ -158,6 +159,14 @@ class Service extends Model
     public function client(): BelongsTo
     {
         return $this->belongsTo(Client::class);
+    }
+
+    /**
+     * Processo vinculado
+     */
+    public function process(): BelongsTo
+    {
+        return $this->belongsTo(Process::class);
     }
 
     /**
