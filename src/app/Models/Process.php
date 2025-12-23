@@ -178,6 +178,14 @@ class Process extends Model
         return $this->hasMany(Diligence::class);
     }
 
+    /**
+     * Lançamentos de tempo do processo
+     */
+    public function timeEntries(): HasMany
+    {
+        return $this->hasMany(TimeEntry::class);
+    }
+
     // ==========================================
     // SCOPES
     // ==========================================

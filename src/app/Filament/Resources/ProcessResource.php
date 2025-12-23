@@ -529,6 +529,7 @@ class ProcessResource extends Resource
             RelationManagers\SubprocessesRelationManager::class,
             RelationManagers\ProceedingsRelationManager::class,
             RelationManagers\DiligencesRelationManager::class,
+            RelationManagers\TimeEntriesRelationManager::class,
             RelationManagers\ServicesRelationManager::class,
             RelationManagers\EventsRelationManager::class,
             RelationManagers\TransactionsRelationManager::class,
