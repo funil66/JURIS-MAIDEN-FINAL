@@ -22,19 +22,19 @@ class ClientTransactionsWidget extends BaseWidget
             ->query(
                 Transaction::query()
                     ->where('client_id', $this->record->id)
-                    ->orderBy('date', 'desc')
+                    ->orderBy('due_date', 'desc')
             )
             ->columns([
-                Tables\Columns\TextColumn::make('date')
-                    ->label('Data')
+                Tables\Columns\TextColumn::make('due_date')
+                    ->label('Vencimento')
                     ->date('d/m/Y')
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('type')
                     ->label('Tipo')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => $state === 'receita' ? '📈 Receita' : '📉 Despesa')
-                    ->color(fn (string $state): string => $state === 'receita' ? 'success' : 'danger'),
+                    ->formatStateUsing(fn (string $state): string => $state === 'income' ? '📈 Receita' : '📉 Despesa')
+                    ->color(fn (string $state): string => $state === 'income' ? 'success' : 'danger'),
 
                 Tables\Columns\TextColumn::make('description')
                     ->label('Descrição')
@@ -51,7 +51,7 @@ class ClientTransactionsWidget extends BaseWidget
                     ->label('Valor')
                     ->money('BRL')
                     ->sortable()
-                    ->color(fn ($record) => $record->type === 'receita' ? 'success' : 'danger'),
+                    ->color(fn ($record) => $record->type === 'income' ? 'success' : 'danger'),
 
                 Tables\Columns\TextColumn::make('paymentMethod.name')
                     ->label('Forma Pagamento')
@@ -77,8 +77,8 @@ class ClientTransactionsWidget extends BaseWidget
                 Tables\Filters\SelectFilter::make('type')
                     ->label('Tipo')
                     ->options([
-                        'receita' => 'Receita',
-                        'despesa' => 'Despesa',
+                        'income' => 'Receita',
+                        'expense' => 'Despesa',
                     ]),
                     
                 Tables\Filters\SelectFilter::make('status')

@@ -139,10 +139,10 @@
                                     </p>
                                 </div>
                                 <span class="px-2 py-1 text-xs font-medium rounded-full
-                                    @if($service->status === 'concluido') bg-green-100 text-green-700
-                                    @elseif($service->status === 'em_andamento') bg-blue-100 text-blue-700
-                                    @elseif($service->status === 'agendado') bg-purple-100 text-purple-700
-                                    @elseif($service->status === 'cancelado') bg-red-100 text-red-700
+                                    @if($service->status === 'completed') bg-green-100 text-green-700
+                                    @elseif($service->status === 'in_progress') bg-blue-100 text-blue-700
+                                    @elseif($service->status === 'confirmed') bg-purple-100 text-purple-700
+                                    @elseif($service->status === 'cancelled') bg-red-100 text-red-700
                                     @else bg-yellow-100 text-yellow-700
                                     @endif">
                                     {{ \App\Models\Service::getStatusOptions()[$service->status] ?? $service->status }}

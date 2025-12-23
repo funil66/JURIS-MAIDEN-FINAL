@@ -50,7 +50,7 @@ class MyTransactions extends Page implements HasTable
                     ->where('type', 'income') // Apenas cobranças ao cliente
             )
             ->columns([
-                TextColumn::make('date')
+                TextColumn::make('created_at')
                     ->label('Data')
                     ->date('d/m/Y')
                     ->sortable(),

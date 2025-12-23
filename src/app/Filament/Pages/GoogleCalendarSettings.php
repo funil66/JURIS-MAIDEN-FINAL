@@ -128,7 +128,7 @@ class GoogleCalendarSettings extends Page
 
             // Sincronizar Services com deadline
             $services = \App\Models\Service::whereNotNull('deadline')
-                ->where('status', '!=', 'concluido')
+                ->where('status', '!=', 'completed')
                 ->get();
 
             foreach ($services as $service_item) {

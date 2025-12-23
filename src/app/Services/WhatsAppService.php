@@ -200,7 +200,7 @@ class WhatsAppService
         $message .= "📋 *Código:* {$service->code}\n";
         $message .= "📊 *Novo Status:* {$statusLabel}\n";
         
-        if ($service->status === 'concluido' && $service->result_summary) {
+        if ($service->status === 'completed' && $service->result_summary) {
             $message .= "\n📝 *Resultado:* {$service->result_summary}\n";
         }
 

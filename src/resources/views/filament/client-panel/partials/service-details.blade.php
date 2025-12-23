@@ -16,10 +16,10 @@
         <div>
             <p class="text-sm text-gray-500">Status</p>
             <span class="inline-flex items-center px-2 py-1 text-xs font-medium rounded-full
-                @if($service->status === 'concluido') bg-green-100 text-green-700
-                @elseif($service->status === 'em_andamento') bg-blue-100 text-blue-700
-                @elseif($service->status === 'agendado') bg-purple-100 text-purple-700
-                @elseif($service->status === 'cancelado') bg-red-100 text-red-700
+                @if($service->status === 'completed') bg-green-100 text-green-700
+                @elseif($service->status === 'in_progress') bg-blue-100 text-blue-700
+                @elseif($service->status === 'confirmed') bg-purple-100 text-purple-700
+                @elseif($service->status === 'cancelled') bg-red-100 text-red-700
                 @else bg-yellow-100 text-yellow-700
                 @endif">
                 {{ \App\Models\Service::getStatusOptions()[$service->status] ?? $service->status }}
@@ -66,7 +66,7 @@
             </div>
             <div>
                 <p class="text-sm text-gray-500">Prazo Final</p>
-                <p class="font-medium @if($service->deadline_date && $service->deadline_date->isPast() && $service->status !== 'concluido') text-red-600 @endif">
+                <p class="font-medium @if($service->deadline_date && $service->deadline_date->isPast() && $service->status !== 'completed') text-red-600 @endif">
                     {{ $service->deadline_date?->format('d/m/Y') ?? '-' }}
                 </p>
             </div>

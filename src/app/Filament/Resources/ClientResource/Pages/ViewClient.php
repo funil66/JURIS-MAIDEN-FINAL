@@ -128,7 +128,7 @@ class ViewClient extends ViewRecord
                         TextEntry::make('total_receitas')
                             ->label('Total Receitas')
                             ->state(fn ($record) => 'R$ ' . number_format(
-                                $record->transactions()->where('type', 'receita')->sum('amount'),
+                                $record->transactions()->where('type', 'income')->sum('amount'),
                                 2, ',', '.'
                             ))
                             ->color('success')
@@ -137,7 +137,7 @@ class ViewClient extends ViewRecord
                         TextEntry::make('total_despesas')
                             ->label('Total Despesas')
                             ->state(fn ($record) => 'R$ ' . number_format(
-                                $record->transactions()->where('type', 'despesa')->sum('amount'),
+                                $record->transactions()->where('type', 'expense')->sum('amount'),
                                 2, ',', '.'
                             ))
                             ->color('danger')
@@ -146,14 +146,14 @@ class ViewClient extends ViewRecord
                         TextEntry::make('saldo')
                             ->label('Saldo')
                             ->state(function ($record) {
-                                $receitas = $record->transactions()->where('type', 'receita')->sum('amount');
-                                $despesas = $record->transactions()->where('type', 'despesa')->sum('amount');
+                                $receitas = $record->transactions()->where('type', 'income')->sum('amount');
+                                $despesas = $record->transactions()->where('type', 'expense')->sum('amount');
                                 $saldo = $receitas - $despesas;
                                 return 'R$ ' . number_format($saldo, 2, ',', '.');
                             })
                             ->color(function ($record) {
-                                $receitas = $record->transactions()->where('type', 'receita')->sum('amount');
-                                $despesas = $record->transactions()->where('type', 'despesa')->sum('amount');
+                                $receitas = $record->transactions()->where('type', 'income')->sum('amount');
+                                $despesas = $record->transactions()->where('type', 'expense')->sum('amount');
                                 return ($receitas - $despesas) >= 0 ? 'success' : 'danger';
                             })
                             ->weight(FontWeight::Bold),

@@ -29,10 +29,10 @@ class Dashboard extends Page
         $this->stats = [
             'total_services' => Service::where('client_id', $client->id)->count(),
             'services_in_progress' => Service::where('client_id', $client->id)
-                ->whereIn('status', ['pendente', 'em_andamento', 'agendado'])
+                ->whereIn('status', ['pending', 'confirmed', 'in_progress'])
                 ->count(),
             'services_completed' => Service::where('client_id', $client->id)
-                ->where('status', 'concluido')
+                ->where('status', 'completed')
                 ->count(),
             'pending_payments' => Transaction::where('client_id', $client->id)
                 ->where('status', 'pending')
