@@ -36,13 +36,13 @@ class GoogleCalendarController extends Controller
                     ->with('error', 'Você precisa estar logado para conectar o Google Calendar.');
             }
 
-            $service = new GoogleCalendarService($user);
+            $service = new GoogleCalendarService();
             
             // Trocar código por tokens
-            $tokens = $service->authenticate($request->get('code'));
+            $tokens = $service->fetchAccessToken($request->get('code'));
             
-            if (!$tokens) {
-                throw new \Exception('Não foi possível obter os tokens de acesso.');
+            if (!$tokens || isset($tokens['error'])) {
+                throw new \Exception($tokens['error_description'] ?? 'Não foi possível obter os tokens de acesso.');
             }
 
             // Salvar tokens no usuário
