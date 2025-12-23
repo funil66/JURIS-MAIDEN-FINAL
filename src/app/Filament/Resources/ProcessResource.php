@@ -527,6 +527,7 @@ class ProcessResource extends Resource
     {
         return [
             RelationManagers\SubprocessesRelationManager::class,
+            RelationManagers\ProceedingsRelationManager::class,
             RelationManagers\ServicesRelationManager::class,
             RelationManagers\EventsRelationManager::class,
             RelationManagers\TransactionsRelationManager::class,
