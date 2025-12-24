@@ -127,6 +127,14 @@ class Client extends Authenticatable implements FilamentUser
     }
 
     /**
+     * Faturas do cliente
+     */
+    public function invoices(): HasMany
+    {
+        return $this->hasMany(Invoice::class);
+    }
+
+    /**
      * Verifica se é pessoa física
      */
     public function isPessoaFisica(): bool
