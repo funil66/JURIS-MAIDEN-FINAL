@@ -144,7 +144,7 @@ class CriticalAlertsWidget extends Widget
         // 8. Audiências esta semana
         $weekHearings = Diligence::where('type', 'hearing')
             ->where('status', 'pending')
-            ->whereBetween('scheduled_at', [now()->startOfWeek(), now()->endOfWeek()])
+            ->whereBetween('scheduled_date', [now()->startOfWeek()->toDateString(), now()->endOfWeek()->toDateString()])
             ->count();
 
         if ($weekHearings > 0) {

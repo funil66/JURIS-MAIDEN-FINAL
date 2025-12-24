@@ -26,16 +26,14 @@ class DiligencesWidget extends BaseWidget
                     ->with(['client', 'process', 'assignedUser'])
                     ->whereIn('status', ['pending', 'in_progress'])
                     ->where(function ($query) {
-                        $query->whereBetween('scheduled_at', [now()->startOfWeek(), now()->endOfWeek()])
-                            ->orWhereBetween('deadline', [now()->startOfWeek(), now()->endOfWeek()])
+                        $query->whereBetween('scheduled_date', [now()->startOfWeek()->toDateString(), now()->endOfWeek()->toDateString()])
                             ->orWhere(function ($q) {
-                                $q->where('deadline', '<', now())
+                                $q->where('scheduled_date', '<', today())
                                     ->whereIn('status', ['pending', 'in_progress']);
                             });
                     })
-                    ->orderByRaw('CASE WHEN deadline < NOW() THEN 0 ELSE 1 END')
-                    ->orderBy('deadline', 'asc')
-                    ->orderBy('scheduled_at', 'asc')
+                    ->orderByRaw('CASE WHEN scheduled_date < CURDATE() THEN 0 ELSE 1 END')
+                    ->orderBy('scheduled_date', 'asc')
                     ->limit(10)
             )
             ->columns([
@@ -91,11 +89,11 @@ class DiligencesWidget extends BaseWidget
                         default => $state,
                     }),
 
-                Tables\Columns\TextColumn::make('deadline')
-                    ->label('Prazo')
+                Tables\Columns\TextColumn::make('scheduled_date')
+                    ->label('Data')
                     ->date('d/m')
-                    ->color(fn ($record) => $record->deadline && $record->deadline < now() ? 'danger' : 'gray')
-                    ->description(fn ($record) => $record->deadline ? ($record->deadline < now() ? 'Vencida!' : $record->deadline->diffForHumans()) : null),
+                    ->color(fn ($record) => $record->scheduled_date && $record->scheduled_date < today() ? 'danger' : 'gray')
+                    ->description(fn ($record) => $record->scheduled_date ? ($record->scheduled_date < today() ? 'Vencida!' : \Carbon\Carbon::parse($record->scheduled_date)->diffForHumans()) : null),
 
                 Tables\Columns\TextColumn::make('assignedUser.name')
                     ->label('Responsável')

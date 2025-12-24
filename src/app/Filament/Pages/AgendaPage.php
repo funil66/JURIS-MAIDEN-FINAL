@@ -101,12 +101,11 @@ class AgendaPage extends Page implements HasForms
 
         // Diligências
         $diligences = Diligence::whereBetween('scheduled_date', [$start, $end])
-            ->orWhereBetween('scheduled_at', [$start, $end])
-            ->with(['process', 'responsible'])
+            ->with(['process', 'assignedUser'])
             ->get();
 
         foreach ($diligences as $diligence) {
-            $scheduleDate = $diligence->scheduled_at ?? $diligence->scheduled_date;
+            $scheduleDate = $diligence->scheduled_date;
             if (!$scheduleDate) continue;
 
             $typeColors = [
@@ -258,9 +257,7 @@ class AgendaPage extends Page implements HasForms
             ->whereDate('deadline_date', today())
             ->count();
 
-        $todayEvents += Diligence::whereDate('scheduled_date', today())
-            ->orWhereDate('scheduled_at', today())
-            ->count();
+        $todayEvents += Diligence::whereDate('scheduled_date', today())->count();
 
         return $todayEvents > 0 ? (string) $todayEvents : null;
     }
