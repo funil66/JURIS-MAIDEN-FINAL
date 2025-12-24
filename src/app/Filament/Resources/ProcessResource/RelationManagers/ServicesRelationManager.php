@@ -74,11 +74,11 @@ class ServicesRelationManager extends RelationManager
                             ->required()
                             ->native(false),
 
-                        Forms\Components\DateTimePicker::make('scheduled_at')
+                        Forms\Components\DateTimePicker::make('scheduled_datetime')
                             ->label('Agendado para')
                             ->native(false),
 
-                        Forms\Components\DateTimePicker::make('completed_at')
+                        Forms\Components\DateTimePicker::make('completion_date')
                             ->label('Concluído em')
                             ->native(false),
 
@@ -153,13 +153,13 @@ class ServicesRelationManager extends RelationManager
                     ->money('BRL')
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('scheduled_at')
+                Tables\Columns\TextColumn::make('scheduled_datetime')
                     ->label('Agendado')
                     ->dateTime('d/m/Y H:i')
                     ->sortable()
                     ->placeholder('-'),
 
-                Tables\Columns\TextColumn::make('completed_at')
+                Tables\Columns\TextColumn::make('completion_date')
                     ->label('Concluído')
                     ->dateTime('d/m/Y H:i')
                     ->sortable()
@@ -211,7 +211,7 @@ class ServicesRelationManager extends RelationManager
                     Tables\Actions\ForceDeleteBulkAction::make(),
                 ]),
             ])
-            ->defaultSort('scheduled_at', 'desc')
+            ->defaultSort('scheduled_datetime', 'desc')
             ->modifyQueryUsing(fn (Builder $query) => $query->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]));

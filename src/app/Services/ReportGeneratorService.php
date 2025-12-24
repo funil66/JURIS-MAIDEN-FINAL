@@ -279,8 +279,8 @@ class ReportGeneratorService
         return match($type) {
             'processes' => 'distribution_date',
             'deadlines' => 'due_date',
-            'diligences' => 'scheduled_at',
-            'time_entries' => 'activity_date',
+            'diligences' => 'scheduled_date',
+            'time_entries' => 'work_date',
             'contracts' => 'start_date',
             'invoices' => 'issue_date',
             'financial' => 'due_date',
