@@ -71,7 +71,7 @@ class SyncCourtMovements extends Command
 
         $schedules = CourtSyncSchedule::query()
             ->active()
-            ->due()
+            ->readyToRun()
             ->with('court')
             ->get();
 

@@ -318,7 +318,7 @@ class CourtApiService
     {
         $schedules = CourtSyncSchedule::query()
             ->active()
-            ->due()
+            ->readyToRun()
             ->with('court')
             ->get();
 

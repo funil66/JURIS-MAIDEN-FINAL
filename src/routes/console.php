@@ -53,3 +53,37 @@ Schedule::command('backup:clean')
     ->withoutOverlapping()
     ->onOneServer()
     ->appendOutputTo(storage_path('logs/backup.log'));
+
+/*
+|--------------------------------------------------------------------------
+| Novos Módulos - Sprints 27-32
+|--------------------------------------------------------------------------
+*/
+
+// Processar prazos - a cada hora (verifica vencidos e envia alertas)
+Schedule::command('deadlines:process')
+    ->hourly()
+    ->withoutOverlapping()
+    ->onOneServer()
+    ->appendOutputTo(storage_path('logs/deadlines.log'));
+
+// Atualizar status de assinaturas - a cada 6 horas
+Schedule::command('signatures:update-status')
+    ->everySixHours()
+    ->withoutOverlapping()
+    ->onOneServer()
+    ->appendOutputTo(storage_path('logs/signatures.log'));
+
+// Sincronizar movimentações dos tribunais - agendamentos pendentes
+Schedule::command('courts:sync --scheduled')
+    ->everyThirtyMinutes()
+    ->withoutOverlapping()
+    ->onOneServer()
+    ->appendOutputTo(storage_path('logs/courts.log'));
+
+// Sincronizar Google Drive - a cada hora
+Schedule::command('drive:sync')
+    ->hourly()
+    ->withoutOverlapping()
+    ->onOneServer()
+    ->appendOutputTo(storage_path('logs/drive.log'));

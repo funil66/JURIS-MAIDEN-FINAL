@@ -68,9 +68,19 @@ trait HasGlobalUid
 
     /**
      * Retorna o prefixo do UID para este model.
-     * Deve ser implementado em cada Model que usa este trait.
+     * Pode ser sobrescrito no Model ou definido via propriedade $uidPrefix.
      */
-    abstract public static function getUidPrefix(): string;
+    public static function getUidPrefix(): string
+    {
+        // Verifica se existe a propriedade estática $uidPrefix definida no model
+        if (property_exists(static::class, 'uidPrefix')) {
+            return static::$uidPrefix;
+        }
+        
+        // Fallback: usa as 3 primeiras letras do nome da classe em maiúsculas
+        $className = class_basename(static::class);
+        return strtoupper(substr($className, 0, 3));
+    }
 
     /**
      * Busca um registro pelo UID
