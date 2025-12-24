@@ -2,7 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\GeneratedDocument;
+use App\Models\GeneratedReport;
 use App\Models\Service;
+use App\Observers\GeneratedDocumentObserver;
+use App\Observers\GeneratedReportObserver;
 use App\Observers\ServiceObserver;
 use Illuminate\Support\ServiceProvider;
 
@@ -23,5 +27,7 @@ class AppServiceProvider extends ServiceProvider
     {
         // Registrar observers
         Service::observe(ServiceObserver::class);
+        GeneratedDocument::observe(GeneratedDocumentObserver::class);
+        GeneratedReport::observe(GeneratedReportObserver::class);
     }
 }

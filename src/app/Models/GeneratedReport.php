@@ -6,6 +6,7 @@ use App\Traits\HasGlobalUid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Facades\Storage;
 
 class GeneratedReport extends Model
@@ -65,6 +66,14 @@ class GeneratedReport extends Model
     public function template(): BelongsTo
     {
         return $this->belongsTo(ReportTemplate::class, 'report_template_id');
+    }
+
+    /**
+     * Arquivos sincronizados com Google Drive
+     */
+    public function driveFiles(): MorphMany
+    {
+        return $this->morphMany(GoogleDriveFile::class, 'fileable');
     }
 
     // === ACCESSORS ===
