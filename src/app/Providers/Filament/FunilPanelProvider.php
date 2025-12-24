@@ -65,9 +65,11 @@ class FunilPanelProvider extends PanelProvider
                     ->locale('pt-br'),
             ])
             ->navigationGroups([
+                'Dashboard',
+                'Jurídico',
                 'Operacional',
-                'Cadastros',
                 'Financeiro',
+                'Cadastros',
                 'Relatórios',
                 'Configurações',
             ]);
