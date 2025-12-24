@@ -39,8 +39,8 @@ class FinancialJuridicalChart extends ChartWidget
                 ->sum('total');
 
             // Valor recebido no mês
-            $monthReceived = Invoice::whereMonth('payment_date', $date->month)
-                ->whereYear('payment_date', $date->year)
+            $monthReceived = Invoice::whereMonth('paid_date', $date->month)
+                ->whereYear('paid_date', $date->year)
                 ->where('status', 'paid')
                 ->sum('total');
 

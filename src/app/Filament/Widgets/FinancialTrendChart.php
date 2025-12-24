@@ -37,8 +37,8 @@ class FinancialTrendChart extends ChartWidget
 
             // Receitas recebidas
             $receivedAmount = Invoice::paid()
-                ->whereMonth('payment_date', $date->month)
-                ->whereYear('payment_date', $date->year)
+                ->whereMonth('paid_date', $date->month)
+                ->whereYear('paid_date', $date->year)
                 ->sum('total');
             $received->push($receivedAmount);
 

@@ -63,8 +63,8 @@ class JuridicalStatsWidget extends BaseWidget
         $pendingInvoices = Invoice::pending()->sum('balance');
         $overdueInvoices = Invoice::overdue()->sum('balance');
         $receivedThisMonth = Invoice::paid()
-            ->whereMonth('payment_date', now()->month)
-            ->whereYear('payment_date', now()->year)
+            ->whereMonth('paid_date', now()->month)
+            ->whereYear('paid_date', now()->year)
             ->sum('total');
 
         // Clientes

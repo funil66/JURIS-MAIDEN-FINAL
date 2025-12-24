@@ -38,7 +38,7 @@ class ModernDashboardWidget extends Widget
 
         // Financeiro
         $receivedMonth = Invoice::paid()
-            ->whereBetween('payment_date', [$startOfMonth, $endOfMonth])
+            ->whereBetween('paid_date', [$startOfMonth, $endOfMonth])
             ->sum('total');
         $pendingInvoices = Invoice::pending()->sum('balance');
         $overdueInvoices = Invoice::overdue()->sum('balance');
@@ -146,7 +146,7 @@ class ModernDashboardWidget extends Widget
         // Últimas faturas pagas
         $recentPayments = Invoice::paid()
             ->with('client')
-            ->latest('payment_date')
+            ->latest('paid_date')
             ->take(3)
             ->get()
             ->map(fn ($i) => [
@@ -155,7 +155,7 @@ class ModernDashboardWidget extends Widget
                 'color' => 'emerald',
                 'title' => 'Pagamento recebido: R$ ' . number_format($i->total, 2, ',', '.'),
                 'subtitle' => $i->client?->name ?? 'Fatura avulsa',
-                'time' => $i->payment_date?->diffForHumans() ?? $i->updated_at->diffForHumans(),
+                'time' => $i->paid_date?->diffForHumans() ?? $i->updated_at->diffForHumans(),
             ]);
 
         // Últimos andamentos
