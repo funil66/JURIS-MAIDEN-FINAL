@@ -45,8 +45,8 @@ class FinancialJuridicalChart extends ChartWidget
                 ->sum('total');
 
             // Horas trabalhadas no mês (convertido para valor: horas * R$200 exemplo)
-            $monthHours = TimeEntry::whereMonth('entry_date', $date->month)
-                ->whereYear('entry_date', $date->year)
+            $monthHours = TimeEntry::whereMonth('work_date', $date->month)
+                ->whereYear('work_date', $date->year)
                 ->where('is_billable', true)
                 ->sum('duration_minutes') / 60;
 

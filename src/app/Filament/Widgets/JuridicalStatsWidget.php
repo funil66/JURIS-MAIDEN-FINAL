@@ -47,13 +47,13 @@ class JuridicalStatsWidget extends BaseWidget
             ->count();
 
         // Time Tracking - Mês Atual
-        $hoursThisMonth = TimeEntry::whereMonth('entry_date', now()->month)
-            ->whereYear('entry_date', now()->year)
+        $hoursThisMonth = TimeEntry::whereMonth('work_date', now()->month)
+            ->whereYear('work_date', now()->year)
             ->sum('duration_minutes') / 60;
 
         $billableHours = TimeEntry::billable()
-            ->whereMonth('entry_date', now()->month)
-            ->whereYear('entry_date', now()->year)
+            ->whereMonth('work_date', now()->month)
+            ->whereYear('work_date', now()->year)
             ->sum('duration_minutes') / 60;
 
         // Financeiro
@@ -134,7 +134,7 @@ class JuridicalStatsWidget extends BaseWidget
         $data = [];
         for ($i = 6; $i >= 0; $i--) {
             $date = now()->subDays($i);
-            $data[] = round(TimeEntry::whereDate('entry_date', $date)->sum('duration_minutes') / 60, 1);
+            $data[] = round(TimeEntry::whereDate('work_date', $date)->sum('duration_minutes') / 60, 1);
         }
         return $data;
     }

@@ -24,7 +24,7 @@ class TimeTrackingWidget extends BaseWidget
             ->query(
                 TimeEntry::query()
                     ->with(['user', 'client', 'process'])
-                    ->whereDate('entry_date', today())
+                    ->whereDate('work_date', today())
                     ->orderBy('start_time', 'desc')
                     ->limit(10)
             )
@@ -130,7 +130,7 @@ class TimeTrackingWidget extends BaseWidget
 
     public function getTableHeading(): string
     {
-        $totalToday = TimeEntry::whereDate('entry_date', today())->sum('duration_minutes');
+        $totalToday = TimeEntry::whereDate('work_date', today())->sum('duration_minutes');
         $formatted = $this->formatDuration($totalToday);
         
         return "⏱️ Horas Trabalhadas Hoje: {$formatted}";
