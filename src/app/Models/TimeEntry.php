@@ -26,6 +26,7 @@ class TimeEntry extends Model
         'user_id',
         'process_id',
         'client_id',
+        'contract_id',
         'service_id',
         'proceeding_id',
         'diligence_id',
@@ -138,6 +139,14 @@ class TimeEntry extends Model
     public function diligence(): BelongsTo
     {
         return $this->belongsTo(Diligence::class);
+    }
+
+    /**
+     * Contrato vinculado
+     */
+    public function contract(): BelongsTo
+    {
+        return $this->belongsTo(Contract::class);
     }
 
     /**

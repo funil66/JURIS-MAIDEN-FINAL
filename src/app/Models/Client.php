@@ -111,6 +111,22 @@ class Client extends Authenticatable implements FilamentUser
     }
 
     /**
+     * Contratos do cliente
+     */
+    public function contracts(): HasMany
+    {
+        return $this->hasMany(Contract::class);
+    }
+
+    /**
+     * Lançamentos de tempo do cliente
+     */
+    public function timeEntries(): HasMany
+    {
+        return $this->hasMany(TimeEntry::class);
+    }
+
+    /**
      * Verifica se é pessoa física
      */
     public function isPessoaFisica(): bool
