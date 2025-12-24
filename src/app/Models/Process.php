@@ -186,6 +186,14 @@ class Process extends Model
         return $this->hasMany(TimeEntry::class);
     }
 
+    /**
+     * Prazos do processo
+     */
+    public function deadlines(): HasMany
+    {
+        return $this->hasMany(Deadline::class);
+    }
+
     // ==========================================
     // SCOPES
     // ==========================================
