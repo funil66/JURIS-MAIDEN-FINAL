@@ -27,6 +27,7 @@ class CourtMovement extends Model
         'complement',
         'movement_date',
         'source',
+        'status',
         'proceeding_id',
         'is_imported',
         'imported_at',
@@ -40,6 +41,25 @@ class CourtMovement extends Model
         'imported_at' => 'datetime',
         'is_imported' => 'boolean',
         'raw_data' => 'array',
+    ];
+
+    /**
+     * Status
+     */
+    public const STATUS_PENDING = 'pending';
+    public const STATUS_IMPORTED = 'imported';
+    public const STATUS_IGNORED = 'ignored';
+
+    public const STATUSES = [
+        self::STATUS_PENDING => 'Pendente',
+        self::STATUS_IMPORTED => 'Importado',
+        self::STATUS_IGNORED => 'Ignorado',
+    ];
+
+    public const STATUS_COLORS = [
+        self::STATUS_PENDING => 'warning',
+        self::STATUS_IMPORTED => 'success',
+        self::STATUS_IGNORED => 'gray',
     ];
 
     /**
@@ -133,11 +153,27 @@ class CourtMovement extends Model
     }
 
     /**
+     * Accessor: Status label
+     */
+    public function getStatusLabelAttribute(): string
+    {
+        return self::STATUSES[$this->status] ?? $this->status;
+    }
+
+    /**
+     * Accessor: Status color
+     */
+    public function getStatusColorAttribute(): string
+    {
+        return self::STATUS_COLORS[$this->status] ?? 'gray';
+    }
+
+    /**
      * Importar para andamentos do processo
      */
     public function importAsProceeding(?int $userId = null): ?Proceeding
     {
-        if ($this->is_imported || !$this->process_id) {
+        if ($this->status === self::STATUS_IMPORTED || !$this->process_id) {
             return null;
         }
 
@@ -161,6 +197,7 @@ class CourtMovement extends Model
         // Marcar como importado
         $this->update([
             'proceeding_id' => $proceeding->id,
+            'status' => self::STATUS_IMPORTED,
             'is_imported' => true,
             'imported_at' => now(),
             'imported_by' => $userId ?? auth()->id(),
@@ -178,11 +215,19 @@ class CourtMovement extends Model
     }
 
     /**
+     * Scope: Pendentes
+     */
+    public function scopePending($query)
+    {
+        return $query->where('status', self::STATUS_PENDING);
+    }
+
+    /**
      * Scope: Não importadas
      */
     public function scopeNotImported($query)
     {
-        return $query->where('is_imported', false);
+        return $query->whereIn('status', [self::STATUS_PENDING, self::STATUS_IGNORED]);
     }
 
     /**
@@ -190,7 +235,15 @@ class CourtMovement extends Model
      */
     public function scopeImported($query)
     {
-        return $query->where('is_imported', true);
+        return $query->where('status', self::STATUS_IMPORTED);
+    }
+
+    /**
+     * Scope: Ignoradas
+     */
+    public function scopeIgnored($query)
+    {
+        return $query->where('status', self::STATUS_IGNORED);
     }
 
     /**
