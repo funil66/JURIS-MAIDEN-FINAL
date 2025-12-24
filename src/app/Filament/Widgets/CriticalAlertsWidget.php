@@ -26,7 +26,7 @@ class CriticalAlertsWidget extends Widget
         $alerts = collect();
 
         // 1. Prazos vencidos
-        $overdueDeadlines = Proceeding::where('is_deadline', true)
+        $overdueDeadlines = Proceeding::where('has_deadline', true)
             ->where('deadline_completed', false)
             ->where('deadline_date', '<', today())
             ->count();
@@ -43,7 +43,7 @@ class CriticalAlertsWidget extends Widget
         }
 
         // 2. Prazos para hoje
-        $todayDeadlines = Proceeding::where('is_deadline', true)
+        $todayDeadlines = Proceeding::where('has_deadline', true)
             ->where('deadline_completed', false)
             ->whereDate('deadline_date', today())
             ->count();
@@ -61,7 +61,7 @@ class CriticalAlertsWidget extends Widget
 
         // 3. Diligências atrasadas
         $overdueDiligences = Diligence::where('status', 'pending')
-            ->where('deadline', '<', now())
+            ->where('scheduled_date', '<', today())
             ->count();
 
         if ($overdueDiligences > 0) {

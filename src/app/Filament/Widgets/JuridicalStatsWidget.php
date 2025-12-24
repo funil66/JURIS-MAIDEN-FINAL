@@ -30,18 +30,18 @@ class JuridicalStatsWidget extends BaseWidget
         // Diligências
         $pendingDiligences = Diligence::pending()->count();
         $overdueDiligences = Diligence::where('status', 'pending')
-            ->where('deadline', '<', now())
+            ->where('scheduled_date', '<', today())
             ->count();
-        $todayDiligences = Diligence::whereDate('scheduled_at', today())->count();
+        $todayDiligences = Diligence::whereDate('scheduled_date', today())->count();
 
         // Prazos (andamentos com deadline)
-        $upcomingDeadlines = \App\Models\Proceeding::where('is_deadline', true)
+        $upcomingDeadlines = \App\Models\Proceeding::where('has_deadline', true)
             ->where('deadline_completed', false)
             ->where('deadline_date', '>=', today())
             ->where('deadline_date', '<=', today()->addDays(7))
             ->count();
         
-        $overdueDeadlines = \App\Models\Proceeding::where('is_deadline', true)
+        $overdueDeadlines = \App\Models\Proceeding::where('has_deadline', true)
             ->where('deadline_completed', false)
             ->where('deadline_date', '<', today())
             ->count();

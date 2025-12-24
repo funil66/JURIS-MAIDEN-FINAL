@@ -37,7 +37,7 @@ class ListGoogleDriveFiles extends ListRecords
                 ->label('Configurações')
                 ->icon('heroicon-o-cog-6-tooth')
                 ->color('gray')
-                ->url(route('filament.admin.pages.google-drive-settings')),
+                ->url(route('filament.funil.pages.google-drive-settings')),
         ];
     }
 

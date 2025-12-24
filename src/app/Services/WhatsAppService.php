@@ -7,17 +7,17 @@ use Illuminate\Support\Facades\Log;
 
 class WhatsAppService
 {
-    protected string $apiUrl;
-    protected string $token;
-    protected string $phoneNumberId;
-    protected bool $enabled;
+    protected string $apiUrl = '';
+    protected string $token = '';
+    protected string $phoneNumberId = '';
+    protected bool $enabled = false;
 
     public function __construct()
     {
-        $this->apiUrl = config('services.whatsapp.api_url', 'https://graph.facebook.com/v18.0');
-        $this->token = config('services.whatsapp.token', '');
-        $this->phoneNumberId = config('services.whatsapp.phone_number_id', '');
-        $this->enabled = config('services.whatsapp.enabled', false);
+        $this->apiUrl = config('services.whatsapp.api_url') ?? 'https://graph.facebook.com/v18.0';
+        $this->token = config('services.whatsapp.token') ?? '';
+        $this->phoneNumberId = config('services.whatsapp.phone_number_id') ?? '';
+        $this->enabled = (bool) config('services.whatsapp.enabled', false);
     }
 
     /**

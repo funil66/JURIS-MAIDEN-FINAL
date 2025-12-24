@@ -1,0 +1,460 @@
+/**
+ * LogísticaJus - Tema Moderno
+ * Paleta: Indigo (primário), Emerald (sucesso), Rose (perigo), Amber (alerta)
+ * Design: Bordas arredondadas, sombras suaves, transições fluidas
+ */
+
+/* ========================================
+   CSS VARIABLES - TEMA CUSTOMIZADO
+   ======================================== */
+:root {
+    --transition-fast: 150ms ease;
+    --transition-normal: 250ms ease;
+    --transition-slow: 350ms ease;
+    --shadow-card: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-card-hover: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --shadow-glow-primary: 0 0 20px rgb(99 102 241 / 0.3);
+    --shadow-glow-success: 0 0 20px rgb(16 185 129 / 0.3);
+    --shadow-glow-danger: 0 0 20px rgb(244 63 94 / 0.3);
+    --radius-soft: 1rem;
+    --radius-medium: 1.25rem;
+    --radius-large: 1.5rem;
+}
+
+/* ========================================
+   BOTÕES - MODERNIZADOS
+   ======================================== */
+
+/* Todos os botões com bordas mais arredondadas */
+.fi-btn {
+    border-radius: var(--radius-soft) !important;
+    transition: all var(--transition-normal) !important;
+    font-weight: 600 !important;
+    min-height: 44px !important; /* Touch target mobile */
+    padding: 0.625rem 1.25rem !important;
+}
+
+/* Hover effects */
+.fi-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card-hover);
+}
+
+.fi-btn:active {
+    transform: translateY(0);
+}
+
+/* Botão primário com gradiente sutil */
+.fi-btn-primary {
+    background: linear-gradient(135deg, rgb(99 102 241) 0%, rgb(79 70 229) 100%) !important;
+}
+
+.fi-btn-primary:hover {
+    background: linear-gradient(135deg, rgb(79 70 229) 0%, rgb(67 56 202) 100%) !important;
+    box-shadow: var(--shadow-glow-primary);
+}
+
+/* Botão success */
+.fi-btn-success,
+.fi-btn[style*="success"] {
+    background: linear-gradient(135deg, rgb(16 185 129) 0%, rgb(5 150 105) 100%) !important;
+}
+
+.fi-btn-success:hover {
+    box-shadow: var(--shadow-glow-success);
+}
+
+/* Botão danger */
+.fi-btn-danger {
+    background: linear-gradient(135deg, rgb(244 63 94) 0%, rgb(225 29 72) 100%) !important;
+}
+
+.fi-btn-danger:hover {
+    box-shadow: var(--shadow-glow-danger);
+}
+
+/* ========================================
+   CARDS E CONTAINERS
+   ======================================== */
+
+/* Seções do Filament */
+.fi-section {
+    border-radius: var(--radius-medium) !important;
+    box-shadow: var(--shadow-card);
+    transition: all var(--transition-normal);
+    overflow: hidden;
+}
+
+.fi-section:hover {
+    box-shadow: var(--shadow-card-hover);
+}
+
+/* Widget cards */
+.fi-wi-stats-overview-stat {
+    border-radius: var(--radius-medium) !important;
+    transition: all var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+}
+
+.fi-wi-stats-overview-stat::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--c-500) 0%, var(--c-400) 100%);
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+}
+
+.fi-wi-stats-overview-stat:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card-hover);
+}
+
+.fi-wi-stats-overview-stat:hover::before {
+    opacity: 1;
+}
+
+/* Valor do stat maior */
+.fi-wi-stats-overview-stat-value {
+    font-size: 2rem !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.025em;
+}
+
+/* ========================================
+   TABELAS
+   ======================================== */
+
+.fi-ta {
+    border-radius: var(--radius-medium) !important;
+    overflow: hidden;
+}
+
+.fi-ta-row {
+    transition: background-color var(--transition-fast);
+}
+
+.fi-ta-row:hover {
+    background-color: rgb(99 102 241 / 0.05) !important;
+}
+
+/* Header da tabela mais destaque */
+.fi-ta-header-cell {
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    font-size: 0.75rem !important;
+    letter-spacing: 0.05em;
+    color: rgb(100 116 139) !important;
+}
+
+/* ========================================
+   FORMULÁRIOS
+   ======================================== */
+
+/* Inputs mais arredondados */
+.fi-input,
+.fi-select,
+.fi-textarea {
+    border-radius: var(--radius-soft) !important;
+    transition: all var(--transition-normal) !important;
+}
+
+.fi-input:focus,
+.fi-select:focus,
+.fi-textarea:focus {
+    box-shadow: 0 0 0 3px rgb(99 102 241 / 0.2) !important;
+    border-color: rgb(99 102 241) !important;
+}
+
+/* Labels */
+.fi-fo-field-wrp-label {
+    font-weight: 600 !important;
+    margin-bottom: 0.5rem !important;
+}
+
+/* ========================================
+   NAVEGAÇÃO LATERAL
+   ======================================== */
+
+.fi-sidebar {
+    transition: all var(--transition-normal);
+}
+
+/* Itens de navegação */
+.fi-sidebar-item {
+    border-radius: var(--radius-soft) !important;
+    margin: 0.25rem 0.5rem !important;
+    transition: all var(--transition-normal) !important;
+}
+
+.fi-sidebar-item:hover {
+    background: linear-gradient(135deg, rgb(99 102 241 / 0.1) 0%, rgb(99 102 241 / 0.05) 100%) !important;
+    transform: translateX(4px);
+}
+
+.fi-sidebar-item-active {
+    background: linear-gradient(135deg, rgb(99 102 241) 0%, rgb(79 70 229) 100%) !important;
+    color: white !important;
+    box-shadow: var(--shadow-glow-primary);
+}
+
+/* Grupos de navegação */
+.fi-sidebar-group-label {
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    font-size: 0.7rem !important;
+    letter-spacing: 0.1em;
+    color: rgb(148 163 184) !important;
+    padding: 1rem 1rem 0.5rem !important;
+}
+
+/* ========================================
+   BADGES
+   ======================================== */
+
+.fi-badge {
+    border-radius: 9999px !important;
+    font-weight: 600 !important;
+    padding: 0.25rem 0.75rem !important;
+    transition: all var(--transition-fast);
+}
+
+.fi-badge:hover {
+    transform: scale(1.05);
+}
+
+/* ========================================
+   MODAIS
+   ======================================== */
+
+.fi-modal-window {
+    border-radius: var(--radius-large) !important;
+    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+}
+
+.fi-modal-header {
+    border-radius: var(--radius-large) var(--radius-large) 0 0 !important;
+}
+
+/* ========================================
+   NOTIFICAÇÕES
+   ======================================== */
+
+.fi-no {
+    border-radius: var(--radius-medium) !important;
+    box-shadow: var(--shadow-card-hover);
+}
+
+/* ========================================
+   CHARTS E GRÁFICOS
+   ======================================== */
+
+.fi-wi-chart {
+    border-radius: var(--radius-medium) !important;
+    padding: 1.5rem !important;
+}
+
+/* ========================================
+   RESPONSIVIDADE MOBILE
+   ======================================== */
+
+@media (max-width: 768px) {
+    /* Botões maiores em mobile */
+    .fi-btn {
+        min-height: 48px !important;
+        padding: 0.75rem 1.5rem !important;
+        font-size: 1rem !important;
+    }
+    
+    /* Stats mais compactos */
+    .fi-wi-stats-overview-stat-value {
+        font-size: 1.5rem !important;
+    }
+    
+    /* Cards com menos padding */
+    .fi-section {
+        border-radius: var(--radius-soft) !important;
+    }
+    
+    /* Navegação full width */
+    .fi-sidebar-item {
+        margin: 0.25rem 0.25rem !important;
+    }
+    
+    /* Tabelas scrollable */
+    .fi-ta-content {
+        overflow-x: auto;
+    }
+    
+    /* Formulários full width */
+    .fi-fo-field-wrp {
+        width: 100% !important;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Muito pequeno - ajustes extras */
+    .fi-btn {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+    
+    .fi-header-heading {
+        font-size: 1.25rem !important;
+    }
+}
+
+/* ========================================
+   DARK MODE AJUSTES
+   ======================================== */
+
+.dark {
+    --shadow-card: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.2);
+    --shadow-card-hover: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+}
+
+.dark .fi-ta-row:hover {
+    background-color: rgb(99 102 241 / 0.1) !important;
+}
+
+.dark .fi-sidebar-item:hover {
+    background: linear-gradient(135deg, rgb(99 102 241 / 0.2) 0%, rgb(99 102 241 / 0.1) 100%) !important;
+}
+
+/* ========================================
+   ANIMAÇÕES
+   ======================================== */
+
+@keyframes pulse-soft {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+@keyframes slide-up {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes glow {
+    0%, 100% { box-shadow: 0 0 5px rgb(99 102 241 / 0.3); }
+    50% { box-shadow: 0 0 20px rgb(99 102 241 / 0.5); }
+}
+
+/* Aplicar animações suaves */
+.fi-wi-stats-overview-stat {
+    animation: slide-up 0.3s ease-out;
+}
+
+/* Badge pulsante para alertas críticos */
+.fi-badge-danger {
+    animation: pulse-soft 2s ease-in-out infinite;
+}
+
+/* ========================================
+   CALENDÁRIO CUSTOMIZADO
+   ======================================== */
+
+.fc {
+    font-family: 'Inter', sans-serif !important;
+}
+
+.fc-event {
+    border-radius: 0.5rem !important;
+    padding: 0.25rem 0.5rem !important;
+    font-weight: 500 !important;
+    border: none !important;
+    transition: all var(--transition-fast);
+}
+
+.fc-event:hover {
+    transform: scale(1.02);
+    box-shadow: var(--shadow-card);
+}
+
+.fc-day-today {
+    background: rgb(99 102 241 / 0.1) !important;
+}
+
+.fc-daygrid-day-number {
+    font-weight: 600;
+    padding: 0.5rem !important;
+}
+
+/* Cores por tipo de evento */
+.fc-event.event-deadline {
+    background: linear-gradient(135deg, rgb(244 63 94) 0%, rgb(225 29 72) 100%) !important;
+}
+
+.fc-event.event-hearing {
+    background: linear-gradient(135deg, rgb(14 165 233) 0%, rgb(2 132 199) 100%) !important;
+}
+
+.fc-event.event-diligence {
+    background: linear-gradient(135deg, rgb(16 185 129) 0%, rgb(5 150 105) 100%) !important;
+}
+
+.fc-event.event-meeting {
+    background: linear-gradient(135deg, rgb(168 85 247) 0%, rgb(147 51 234) 100%) !important;
+}
+
+.fc-event.event-task {
+    background: linear-gradient(135deg, rgb(251 191 36) 0%, rgb(245 158 11) 100%) !important;
+}
+
+/* ========================================
+   PROGRESS BARS
+   ======================================== */
+
+.progress-bar {
+    border-radius: 9999px;
+    overflow: hidden;
+    background: rgb(226 232 240);
+    height: 8px;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    border-radius: 9999px;
+    transition: width var(--transition-slow);
+    background: linear-gradient(90deg, rgb(99 102 241) 0%, rgb(79 70 229) 100%);
+}
+
+.dark .progress-bar {
+    background: rgb(51 65 85);
+}
+
+/* ========================================
+   LOADING STATES
+   ======================================== */
+
+.fi-loading-indicator {
+    color: rgb(99 102 241) !important;
+}
+
+/* Skeleton loading */
+.skeleton {
+    background: linear-gradient(90deg, rgb(226 232 240) 25%, rgb(241 245 249) 50%, rgb(226 232 240) 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+    border-radius: var(--radius-soft);
+}
+
+@keyframes skeleton-loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+.dark .skeleton {
+    background: linear-gradient(90deg, rgb(51 65 85) 25%, rgb(71 85 105) 50%, rgb(51 65 85) 75%);
+    background-size: 200% 100%;
+}

@@ -66,7 +66,7 @@
                     <div class="mt-4 p-4 bg-amber-50 dark:bg-amber-900/20 rounded-lg">
                         <h4 class="text-amber-700 dark:text-amber-300 font-semibold">💡 Dica</h4>
                         <p class="text-sm text-amber-600 dark:text-amber-400">
-                            As variáveis marcadas com <code>{{variavel}}</code> serão substituídas automaticamente 
+                            As variáveis marcadas com <code class="bg-amber-100 dark:bg-amber-800 px-1 rounded">@{{ variavel }}</code> serão substituídas automaticamente 
                             com os dados do advogado logado, cliente selecionado e serviço vinculado.
                         </p>
                     </div>
