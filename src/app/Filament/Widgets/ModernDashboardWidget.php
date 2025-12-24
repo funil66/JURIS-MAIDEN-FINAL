@@ -56,7 +56,7 @@ class ModernDashboardWidget extends Widget
 
         // Contratos
         $activeContracts = Contract::active()->count();
-        $monthlyRevenue = Contract::active()->sum('monthly_fee');
+        $monthlyRevenue = Contract::active()->sum('total_value');
 
         return [
             'processes' => [

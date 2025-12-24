@@ -58,7 +58,7 @@ class JuridicalStatsWidget extends BaseWidget
 
         // Financeiro
         $activeContracts = Contract::active()->count();
-        $monthlyContractValue = Contract::active()->sum('monthly_fee');
+        $monthlyContractValue = Contract::active()->sum('total_value');
 
         $pendingInvoices = Invoice::pending()->sum('balance');
         $overdueInvoices = Invoice::overdue()->sum('balance');
