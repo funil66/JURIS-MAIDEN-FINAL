@@ -493,6 +493,6 @@ class ProceedingResource extends Resource
 
     public static function getGloballySearchableAttributes(): array
     {
-        return ['uid', 'title', 'content', 'process.title', 'process.cnj_number'];
+        return ['uid', 'title', 'content'];
     }
 }

@@ -605,6 +605,6 @@ class DiligenceResource extends Resource
 
     public static function getGloballySearchableAttributes(): array
     {
-        return ['uid', 'title', 'location_name', 'process.title', 'client.name'];
+        return ['uid', 'title', 'location_name'];
     }
 }
