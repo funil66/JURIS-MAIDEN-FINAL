@@ -289,6 +289,7 @@ class ProceedingResource extends Resource
                     ->label('Processo')
                     ->limit(30)
                     ->searchable()
+                    ->default('')
                     ->toggleable(),
 
                 Tables\Columns\TextColumn::make('deadline_date')
@@ -323,6 +324,7 @@ class ProceedingResource extends Resource
 
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Registrado por')
+                    ->default('')
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 Tables\Columns\TextColumn::make('created_at')
