@@ -357,7 +357,7 @@ class ProceedingResource extends Resource
                 // Compatibilidade: filtro legado 'is_deadline' usado em URLs/links externos
                 Tables\Filters\TernaryFilter::make('is_deadline')
                     ->label('Com Prazo (legacy)')
-                    ->query(fn (Builder $query, $value) => $query->where('has_deadline', $value)),
+                    ->query(fn (Builder $query, array $data) => $query->where('has_deadline', $data['value'])),
 
                 Tables\Filters\TernaryFilter::make('deadline_completed')
                     ->label('Prazo Cumprido'),

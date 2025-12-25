@@ -58,8 +58,8 @@ class AgendaPage extends Page implements HasForms
         $events = collect();
 
         // Eventos do modelo Event
-        $eventRecords = Event::whereBetween('start_date', [$start, $end])
-            ->orWhereBetween('end_date', [$start, $end])
+        $eventRecords = Event::whereBetween('starts_at', [$start, $end])
+            ->orWhereBetween('ends_at', [$start, $end])
             ->get();
 
         foreach ($eventRecords as $event) {
@@ -67,8 +67,8 @@ class AgendaPage extends Page implements HasForms
                 'id' => 'event-' . $event->id,
                 'type' => 'event',
                 'title' => $event->title,
-                'start' => $event->start_date,
-                'end' => $event->end_date ?? $event->start_date,
+                'start' => $event->starts_at,
+                'end' => $event->ends_at ?? $event->starts_at,
                 'color' => $event->color ?? 'indigo',
                 'description' => $event->description,
                 'all_day' => $event->all_day ?? false,
