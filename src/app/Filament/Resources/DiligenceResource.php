@@ -364,12 +364,14 @@ class DiligenceResource extends Resource
                     ->label('Processo')
                     ->limit(25)
                     ->searchable()
+                    ->default('')
                     ->toggleable(),
 
                 Tables\Columns\TextColumn::make('client.name')
                     ->label('Cliente')
                     ->limit(20)
                     ->searchable()
+                    ->default('')
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 Tables\Columns\TextColumn::make('location_name')
@@ -381,6 +383,7 @@ class DiligenceResource extends Resource
                 Tables\Columns\TextColumn::make('assignedUser.name')
                     ->label('Responsável')
                     ->searchable()
+                    ->default('')
                     ->toggleable(),
 
                 Tables\Columns\TextColumn::make('status')
