@@ -176,7 +176,7 @@ class InstallmentsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('status')
                     ->label('Status')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => ContractInstallment::getStatusOptions()[$state] ?? $state)
+                    ->formatStateUsing(fn (?string $state): string => $state ? (ContractInstallment::getStatusOptions()[$state] ?? $state) : '-')
                     ->color(fn (string $state): string => match ($state) {
                         'pending' => 'warning',
                         'paid' => 'success',

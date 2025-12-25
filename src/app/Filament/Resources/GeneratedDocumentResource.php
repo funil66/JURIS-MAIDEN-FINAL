@@ -121,8 +121,8 @@ class GeneratedDocumentResource extends Resource
                 Tables\Columns\TextColumn::make('status')
                     ->label('Status')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => GeneratedDocument::getStatusOptions()[$state] ?? $state)
-                    ->color(fn (string $state): string => GeneratedDocument::getStatusColors()[$state] ?? 'gray'),
+                    ->formatStateUsing(fn (?string $state): string => $state ? (GeneratedDocument::getStatusOptions()[$state] ?? $state) : '-')
+                    ->color(fn (?string $state): string => GeneratedDocument::getStatusColors()[$state] ?? 'gray'),
 
                 Tables\Columns\TextColumn::make('formatted_file_size')
                     ->label('Tamanho')

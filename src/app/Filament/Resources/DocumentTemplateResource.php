@@ -161,8 +161,8 @@ class DocumentTemplateResource extends Resource
                 Tables\Columns\TextColumn::make('category')
                     ->label('Categoria')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => DocumentTemplate::getCategoryOptions()[$state] ?? $state)
-                    ->color(fn (string $state): string => DocumentTemplate::getCategoryColors()[$state] ?? 'gray')
+                    ->formatStateUsing(fn (?string $state): string => $state ? (DocumentTemplate::getCategoryOptions()[$state] ?? $state) : '-')
+                    ->color(fn (?string $state): string => DocumentTemplate::getCategoryColors()[$state] ?? 'gray')
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('format')

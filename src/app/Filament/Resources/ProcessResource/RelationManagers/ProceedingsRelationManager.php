@@ -135,7 +135,7 @@ class ProceedingsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('type')
                     ->label('Tipo')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => Proceeding::getTypeOptions()[$state] ?? $state)
+                    ->formatStateUsing(fn (?string $state): string => $state ? (Proceeding::getTypeOptions()[$state] ?? $state) : '-')
                     ->color(fn (string $state): string => match ($state) {
                         'decision', 'sentence' => 'success',
                         'deadline', 'citation' => 'warning',
@@ -164,7 +164,7 @@ class ProceedingsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('status')
                     ->label('Status')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => Proceeding::getStatusOptions()[$state] ?? $state)
+                    ->formatStateUsing(fn (?string $state): string => $state ? (Proceeding::getStatusOptions()[$state] ?? $state) : '-')
                     ->color(fn (string $state): string => match ($state) {
                         'pending' => 'warning',
                         'analyzed' => 'info',

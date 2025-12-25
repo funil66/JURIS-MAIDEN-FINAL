@@ -51,14 +51,14 @@ class DiligencesWidget extends BaseWidget
                 Tables\Columns\TextColumn::make('type')
                     ->label('Tipo')
                     ->badge()
-                    ->color(fn ($state) => match ($state) {
+                    ->color(fn (?string $state): string => match ($state) {
                         'citation' => 'danger',
                         'hearing' => 'warning',
                         'subpoena' => 'info',
                         'protocol' => 'success',
                         default => 'gray',
                     })
-                    ->formatStateUsing(fn ($state) => match ($state) {
+                    ->formatStateUsing(fn (?string $state): string => $state ? match ($state) {
                         'citation' => 'Citação',
                         'subpoena' => 'Intimação',
                         'hearing' => 'Audiência',
@@ -68,7 +68,7 @@ class DiligencesWidget extends BaseWidget
                         'meeting' => 'Reunião',
                         'travel' => 'Viagem',
                         default => 'Outro',
-                    }),
+                    } : 'Outro'),
 
                 Tables\Columns\TextColumn::make('status')
                     ->label('Status')

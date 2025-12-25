@@ -106,7 +106,7 @@ class ContractsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('fee_type')
                     ->label('Honorário')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => Contract::getFeeTypeOptions()[$state] ?? $state)
+                    ->formatStateUsing(fn (?string $state): string => $state ? (Contract::getFeeTypeOptions()[$state] ?? $state) : '-')
                     ->color('gray'),
 
                 Tables\Columns\TextColumn::make('total_value')
@@ -122,7 +122,7 @@ class ContractsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('status')
                     ->label('Status')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => Contract::getStatusOptions()[$state] ?? $state)
+                    ->formatStateUsing(fn (?string $state): string => $state ? (Contract::getStatusOptions()[$state] ?? $state) : '-')
                     ->color(fn (string $state): string => match ($state) {
                         'draft' => 'gray',
                         'pending_signature' => 'warning',

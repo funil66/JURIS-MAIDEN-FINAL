@@ -133,14 +133,14 @@ class ServicesRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('status')
                     ->label('Status')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                    ->formatStateUsing(fn (?string $state): string => $state ? match ($state) {
                         'pending' => 'Pendente',
                         'in_progress' => 'Em Andamento',
                         'completed' => 'Concluído',
                         'cancelled' => 'Cancelado',
                         default => $state,
-                    })
-                    ->color(fn (string $state): string => match ($state) {
+                    } : '-')
+                    ->color(fn (?string $state): string => match ($state) {
                         'pending' => 'warning',
                         'in_progress' => 'info',
                         'completed' => 'success',

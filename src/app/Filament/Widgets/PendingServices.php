@@ -46,8 +46,8 @@ class PendingServices extends BaseWidget
                 Tables\Columns\TextColumn::make('status')
                     ->label('Status')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => Service::getStatusOptions()[$state] ?? $state)
-                    ->color(fn (string $state): string => Service::getStatusColors()[$state] ?? 'gray'),
+                    ->formatStateUsing(fn (?string $state): string => $state ? (Service::getStatusOptions()[$state] ?? $state) : '-')
+                    ->color(fn (?string $state): string => Service::getStatusColors()[$state] ?? 'gray'),
 
                 Tables\Columns\TextColumn::make('total_price')
                     ->label('Valor')
@@ -56,8 +56,8 @@ class PendingServices extends BaseWidget
                 Tables\Columns\TextColumn::make('payment_status')
                     ->label('Pagamento')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => Service::getPaymentStatusOptions()[$state] ?? $state)
-                    ->color(fn (string $state): string => Service::getPaymentStatusColors()[$state] ?? 'gray'),
+                    ->formatStateUsing(fn (?string $state): string => $state ? (Service::getPaymentStatusOptions()[$state] ?? $state) : '-')
+                    ->color(fn (?string $state): string => Service::getPaymentStatusColors()[$state] ?? 'gray'),
             ])
             ->actions([
                 Tables\Actions\Action::make('edit')

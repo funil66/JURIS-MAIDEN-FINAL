@@ -387,8 +387,8 @@ class ContractResource extends Resource
                 Tables\Columns\TextColumn::make('fee_type')
                     ->label('Tipo Hon.')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => Contract::getFeeTypeOptions()[$state] ?? $state)
-                    ->color(fn (string $state): string => match ($state) {
+                    ->formatStateUsing(fn (?string $state): string => $state ? (Contract::getFeeTypeOptions()[$state] ?? $state) : '-')
+                    ->color(fn (?string $state): string => match ($state) {
                         'fixed' => 'info',
                         'hourly' => 'warning',
                         'success' => 'success',
@@ -436,8 +436,8 @@ class ContractResource extends Resource
                 Tables\Columns\TextColumn::make('status')
                     ->label('Status')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => Contract::getStatusOptions()[$state] ?? $state)
-                    ->color(fn (string $state): string => match ($state) {
+                    ->formatStateUsing(fn (?string $state): string => $state ? (Contract::getStatusOptions()[$state] ?? $state) : '-')
+                    ->color(fn (?string $state): string => match ($state) {
                         'draft' => 'gray',
                         'pending_signature' => 'warning',
                         'active' => 'success',

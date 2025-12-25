@@ -310,7 +310,7 @@ class InvoiceResource extends Resource
                 Tables\Columns\TextColumn::make('invoice_type')
                     ->label('Tipo')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => Invoice::getInvoiceTypeOptions()[$state] ?? $state)
+                    ->formatStateUsing(fn (?string $state): string => $state ? (Invoice::getInvoiceTypeOptions()[$state] ?? $state) : '-')
                     ->color('gray')
                     ->toggleable(),
 
@@ -350,8 +350,8 @@ class InvoiceResource extends Resource
                 Tables\Columns\TextColumn::make('status')
                     ->label('Status')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => Invoice::getStatusOptions()[$state] ?? $state)
-                    ->color(fn (string $state): string => match ($state) {
+                    ->formatStateUsing(fn (?string $state): string => $state ? (Invoice::getStatusOptions()[$state] ?? $state) : '-')
+                    ->color(fn (?string $state): string => match ($state) {
                         'draft' => 'gray',
                         'pending' => 'warning',
                         'partial' => 'info',

@@ -113,8 +113,8 @@ class ViewInvoice extends ViewRecord
                             ->label('Status')
                             ->badge()
                             ->size('lg')
-                            ->formatStateUsing(fn (string $state): string => Invoice::getStatusOptions()[$state] ?? $state)
-                            ->color(fn (string $state): string => match ($state) {
+                            ->formatStateUsing(fn (?string $state): string => $state ? (Invoice::getStatusOptions()[$state] ?? $state) : '-')
+                            ->color(fn (?string $state): string => match ($state) {
                                 'draft' => 'gray',
                                 'pending' => 'warning',
                                 'partial' => 'info',
@@ -174,11 +174,11 @@ class ViewInvoice extends ViewRecord
                     ->schema([
                         Components\TextEntry::make('invoice_type')
                             ->label('Tipo')
-                            ->formatStateUsing(fn (string $state): string => Invoice::getInvoiceTypeOptions()[$state] ?? $state),
+                            ->formatStateUsing(fn (?string $state): string => $state ? (Invoice::getInvoiceTypeOptions()[$state] ?? $state) : '-'),
 
                         Components\TextEntry::make('billing_type')
                             ->label('Cobrança')
-                            ->formatStateUsing(fn (string $state): string => Invoice::getBillingTypeOptions()[$state] ?? $state),
+                            ->formatStateUsing(fn (?string $state): string => $state ? (Invoice::getBillingTypeOptions()[$state] ?? $state) : '-'),
 
                         Components\TextEntry::make('period_description')
                             ->label('Período')

@@ -313,7 +313,7 @@ class ReportTemplateResource extends Resource
                         Components\TextEntry::make('default_format')
                             ->label('Formato')
                             ->badge()
-                            ->formatStateUsing(fn ($state) => strtoupper($state)),
+                            ->formatStateUsing(fn (?string $state): string => $state ? strtoupper($state) : '-'),
 
                         Components\TextEntry::make('orientation')
                             ->label('Orientação')

@@ -60,7 +60,7 @@ class DeadlinesWidget extends BaseWidget
                 Tables\Columns\TextColumn::make('type')
                     ->label('Tipo')
                     ->badge()
-                    ->color(fn ($state) => match ($state) {
+                    ->color(fn (?string $state): string => match ($state) {
                         'hearing' => 'danger',
                         'decision' => 'warning',
                         'subpoena' => 'info',
@@ -68,7 +68,7 @@ class DeadlinesWidget extends BaseWidget
                         'sentence' => 'success',
                         default => 'gray',
                     })
-                    ->formatStateUsing(fn ($state) => match ($state) {
+                    ->formatStateUsing(fn (?string $state): string => $state ? match ($state) {
                         'distribution' => 'Distribuição',
                         'citation' => 'Citação',
                         'subpoena' => 'Intimação',
@@ -78,7 +78,7 @@ class DeadlinesWidget extends BaseWidget
                         'appeal' => 'Recurso',
                         'transit' => 'Trânsito',
                         default => 'Outro',
-                    }),
+                    } : 'Outro'),
 
                 Tables\Columns\TextColumn::make('process.client.name')
                     ->label('Cliente')

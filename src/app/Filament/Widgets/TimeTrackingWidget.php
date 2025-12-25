@@ -53,7 +53,7 @@ class TimeTrackingWidget extends BaseWidget
                 Tables\Columns\TextColumn::make('activity_type')
                     ->label('Atividade')
                     ->badge()
-                    ->color(fn ($state) => match ($state) {
+                    ->color(fn (?string $state): string => match ($state) {
                         'hearing' => 'danger',
                         'meeting' => 'warning',
                         'drafting' => 'info',
@@ -61,7 +61,7 @@ class TimeTrackingWidget extends BaseWidget
                         'review' => 'success',
                         default => 'gray',
                     })
-                    ->formatStateUsing(fn ($state) => match ($state) {
+                    ->formatStateUsing(fn (?string $state): string => $state ? match ($state) {
                         'hearing' => 'Audiência',
                         'meeting' => 'Reunião',
                         'drafting' => 'Redação',
@@ -72,7 +72,7 @@ class TimeTrackingWidget extends BaseWidget
                         'travel' => 'Deslocamento',
                         'court' => 'Fórum',
                         default => 'Outro',
-                    }),
+                    } : 'Outro'),
 
                 Tables\Columns\IconColumn::make('is_billable')
                     ->label('Fat.')
@@ -85,7 +85,7 @@ class TimeTrackingWidget extends BaseWidget
                 Tables\Columns\TextColumn::make('status')
                     ->label('Status')
                     ->badge()
-                    ->color(fn ($state) => match ($state) {
+                    ->color(fn (?string $state): string => match ($state) {
                         'draft' => 'gray',
                         'submitted' => 'warning',
                         'approved' => 'success',
@@ -93,14 +93,14 @@ class TimeTrackingWidget extends BaseWidget
                         'rejected' => 'danger',
                         default => 'gray',
                     })
-                    ->formatStateUsing(fn ($state) => match ($state) {
+                    ->formatStateUsing(fn (?string $state): string => $state ? match ($state) {
                         'draft' => 'Rascunho',
                         'submitted' => 'Enviado',
                         'approved' => 'Aprovado',
                         'billed' => 'Faturado',
                         'rejected' => 'Rejeitado',
                         default => $state,
-                    }),
+                    } : '-') ,
             ])
             ->actions([
                 Tables\Actions\Action::make('view')

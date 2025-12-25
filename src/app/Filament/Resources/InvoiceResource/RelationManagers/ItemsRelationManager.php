@@ -105,7 +105,7 @@ class ItemsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('item_type')
                     ->label('Tipo')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => InvoiceItem::getItemTypeOptions()[$state] ?? $state)
+                    ->formatStateUsing(fn (?string $state): string => $state ? (InvoiceItem::getItemTypeOptions()[$state] ?? $state) : '-')
                     ->color('gray'),
 
                 Tables\Columns\TextColumn::make('description')

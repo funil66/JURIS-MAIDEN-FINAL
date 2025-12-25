@@ -390,10 +390,8 @@ class ProcessResource extends Resource
                 Tables\Columns\TextColumn::make('status')
                     ->label('Status')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => 
-                        Process::getStatusOptions()[$state] ?? $state
-                    )
-                    ->color(fn (string $state): string => match($state) {
+                    ->formatStateUsing(fn (?string $state): string => $state ? (Process::getStatusOptions()[$state] ?? $state) : '-')
+                    ->color(fn (?string $state): string => match($state) {
                         'active' => 'success',
                         'suspended' => 'warning',
                         'prospecting' => 'info',
@@ -406,17 +404,13 @@ class ProcessResource extends Resource
                 Tables\Columns\TextColumn::make('phase')
                     ->label('Fase')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => 
-                        Process::getPhaseOptions()[$state] ?? $state
-                    )
+                    ->formatStateUsing(fn (?string $state): string => $state ? (Process::getPhaseOptions()[$state] ?? $state) : '-')
                     ->color('gray')
                     ->toggleable(),
 
                 Tables\Columns\TextColumn::make('instance')
                     ->label('Instância')
-                    ->formatStateUsing(fn (string $state): string => 
-                        Process::getInstanceOptions()[$state] ?? $state
-                    )
+                    ->formatStateUsing(fn (?string $state): string => $state ? (Process::getInstanceOptions()[$state] ?? $state) : '-')
                     ->toggleable(),
 
                 Tables\Columns\TextColumn::make('court')

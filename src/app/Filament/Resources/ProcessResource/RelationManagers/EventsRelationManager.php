@@ -131,7 +131,7 @@ class EventsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('type')
                     ->label('Tipo')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                    ->formatStateUsing(fn (?string $state): string => $state ? match ($state) {
                         'hearing' => 'Audiência',
                         'meeting' => 'Reunião',
                         'deadline' => 'Prazo',
@@ -139,7 +139,7 @@ class EventsRelationManager extends RelationManager
                         'reminder' => 'Lembrete',
                         'other' => 'Outro',
                         default => $state,
-                    })
+                    } : '-')
                     ->color(fn (string $state): string => match ($state) {
                         'hearing' => 'danger',
                         'meeting' => 'info',
@@ -169,14 +169,14 @@ class EventsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('status')
                     ->label('Status')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                    ->formatStateUsing(fn (?string $state): string => $state ? match ($state) {
                         'scheduled' => 'Agendado',
                         'confirmed' => 'Confirmado',
                         'completed' => 'Concluído',
                         'cancelled' => 'Cancelado',
                         'rescheduled' => 'Remarcado',
                         default => $state,
-                    })
+                    } : '-')
                     ->color(fn (string $state): string => match ($state) {
                         'scheduled' => 'warning',
                         'confirmed' => 'info',

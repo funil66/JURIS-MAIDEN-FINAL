@@ -146,12 +146,12 @@ class TransactionsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('type')
                     ->label('Tipo')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                    ->formatStateUsing(fn (?string $state): string => $state ? match ($state) {
                         'income' => 'Receita',
                         'expense' => 'Despesa',
                         default => $state,
-                    })
-                    ->color(fn (string $state): string => match ($state) {
+                    } : '-')
+                    ->color(fn (?string $state): string => match ($state) {
                         'income' => 'success',
                         'expense' => 'danger',
                         default => 'gray',
@@ -196,14 +196,14 @@ class TransactionsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('status')
                     ->label('Status')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                    ->formatStateUsing(fn (?string $state): string => $state ? match ($state) {
                         'pending' => 'Pendente',
                         'paid' => 'Pago',
                         'cancelled' => 'Cancelado',
                         'refunded' => 'Estornado',
                         default => $state,
-                    })
-                    ->color(fn (string $state): string => match ($state) {
+                    } : '-')
+                    ->color(fn (?string $state): string => match ($state) {
                         'pending' => 'warning',
                         'paid' => 'success',
                         'cancelled' => 'danger',

@@ -33,8 +33,8 @@ class ClientTransactionsWidget extends BaseWidget
                 Tables\Columns\TextColumn::make('type')
                     ->label('Tipo')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => $state === 'income' ? '📈 Receita' : '📉 Despesa')
-                    ->color(fn (string $state): string => $state === 'income' ? 'success' : 'danger'),
+                    ->formatStateUsing(fn (?string $state): string => $state === 'income' ? '📈 Receita' : '📉 Despesa')
+                    ->color(fn (?string $state): string => $state === 'income' ? 'success' : 'danger'),
 
                 Tables\Columns\TextColumn::make('description')
                     ->label('Descrição')

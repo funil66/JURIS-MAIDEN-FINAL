@@ -130,7 +130,7 @@ class DiligencesRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('type')
                     ->label('Tipo')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => Diligence::getTypeOptions()[$state] ?? $state)
+                    ->formatStateUsing(fn (?string $state): string => $state ? (Diligence::getTypeOptions()[$state] ?? $state) : '-')
                     ->color('gray'),
 
                 Tables\Columns\TextColumn::make('title')
@@ -152,8 +152,8 @@ class DiligencesRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('status')
                     ->label('Status')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => Diligence::getStatusOptions()[$state] ?? $state)
-                    ->color(fn (string $state): string => match ($state) {
+                    ->formatStateUsing(fn (?string $state): string => $state ? (Diligence::getStatusOptions()[$state] ?? $state) : '-')
+                    ->color(fn (?string $state): string => match ($state) {
                         'pending' => 'warning',
                         'scheduled' => 'info',
                         'in_progress' => 'primary',

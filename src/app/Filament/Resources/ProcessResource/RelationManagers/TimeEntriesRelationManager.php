@@ -105,7 +105,7 @@ class TimeEntriesRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('activity_type')
                     ->label('Tipo')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => TimeEntry::getActivityTypeOptions()[$state] ?? $state)
+                    ->formatStateUsing(fn (?string $state): string => $state ? (TimeEntry::getActivityTypeOptions()[$state] ?? $state) : '-')
                     ->color('gray'),
 
                 Tables\Columns\TextColumn::make('description')
@@ -132,7 +132,7 @@ class TimeEntriesRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('status')
                     ->label('Status')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => TimeEntry::getStatusOptions()[$state] ?? $state)
+                    ->formatStateUsing(fn (?string $state): string => $state ? (TimeEntry::getStatusOptions()[$state] ?? $state) : '-')
                     ->color(fn (string $state): string => match ($state) {
                         'draft' => 'gray',
                         'submitted' => 'warning',

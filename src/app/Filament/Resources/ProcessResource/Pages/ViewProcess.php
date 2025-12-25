@@ -144,9 +144,7 @@ class ViewProcess extends ViewRecord
 
                         Components\TextEntry::make('client_role')
                             ->label('Papel do Cliente')
-                            ->formatStateUsing(fn (string $state) => 
-                                \App\Models\Process::getClientRoleOptions()[$state] ?? $state
-                            ),
+                            ->formatStateUsing(fn (?string $state): string => $state ? (\App\Models\Process::getClientRoleOptions()[$state] ?? $state) : '-'),
                     ]),
 
                 Components\Section::make('Valores')

@@ -245,8 +245,8 @@ class ClientResource extends Resource
                 Tables\Columns\TextColumn::make('type')
                     ->label('Tipo')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => $state === 'pf' ? 'PF' : 'PJ')
-                    ->color(fn (string $state): string => $state === 'pf' ? 'info' : 'warning'),
+                    ->formatStateUsing(fn (?string $state): string => $state ? ($state === 'pf' ? 'PF' : 'PJ') : '-')
+                    ->color(fn (?string $state): string => $state === 'pf' ? 'info' : 'warning'),
 
                 Tables\Columns\TextColumn::make('document')
                     ->label('CPF/CNPJ')

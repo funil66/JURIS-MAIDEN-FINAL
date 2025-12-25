@@ -236,8 +236,8 @@ class TransactionResource extends Resource
                 Tables\Columns\TextColumn::make('type')
                     ->label('Tipo')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => $state === 'income' ? 'Receita' : 'Despesa')
-                    ->color(fn (string $state): string => $state === 'income' ? 'success' : 'danger')
+                    ->formatStateUsing(fn (?string $state): string => $state === 'income' ? 'Receita' : 'Despesa')
+                    ->color(fn (?string $state): string => $state === 'income' ? 'success' : 'danger')
                     ->icon(fn (string $state): string => $state === 'income' ? 'heroicon-o-arrow-trending-up' : 'heroicon-o-arrow-trending-down'),
 
                 Tables\Columns\TextColumn::make('description')
@@ -285,8 +285,8 @@ class TransactionResource extends Resource
                 Tables\Columns\TextColumn::make('status')
                     ->label('Status')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => Transaction::getStatusOptions()[$state] ?? $state)
-                    ->color(fn (string $state): string => Transaction::getStatusColors()[$state] ?? 'gray'),
+                    ->formatStateUsing(fn (?string $state): string => $state ? (Transaction::getStatusOptions()[$state] ?? $state) : '-')
+                    ->color(fn (?string $state): string => Transaction::getStatusColors()[$state] ?? 'gray'),
 
                 Tables\Columns\TextColumn::make('paymentMethod.name')
                     ->label('Forma')

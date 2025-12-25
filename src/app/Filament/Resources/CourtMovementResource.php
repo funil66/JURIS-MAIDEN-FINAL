@@ -155,7 +155,7 @@ class CourtMovementResource extends Resource
                     ->label('Status')
                     ->badge()
                     ->color(fn (string $state): string => CourtMovement::STATUS_COLORS[$state] ?? 'gray')
-                    ->formatStateUsing(fn (string $state): string => CourtMovement::STATUSES[$state] ?? $state)
+                    ->formatStateUsing(fn (?string $state): string => $state ? (CourtMovement::STATUSES[$state] ?? $state) : '-')
                     ->sortable(),
 
                 Tables\Columns\IconColumn::make('proceeding_id')

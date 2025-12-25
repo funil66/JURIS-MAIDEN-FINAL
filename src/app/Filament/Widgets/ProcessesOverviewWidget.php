@@ -62,7 +62,7 @@ class ProcessesOverviewWidget extends BaseWidget
                         'info' => fn ($state) => in_array($state, ['closed_won', 'closed_settled']),
                         'danger' => 'closed_lost',
                     ])
-                    ->formatStateUsing(fn ($state) => match ($state) {
+                    ->formatStateUsing(fn (?string $state): string => $state ? match ($state) {
                         'active' => 'Ativo',
                         'suspended' => 'Suspenso',
                         'archived' => 'Arquivado',
@@ -70,7 +70,7 @@ class ProcessesOverviewWidget extends BaseWidget
                         'closed_lost' => 'Perdido',
                         'closed_settled' => 'Acordo',
                         default => $state,
-                    }),
+                    } : '-'),
 
                 Tables\Columns\TextColumn::make('phase')
                     ->label('Fase')
@@ -82,13 +82,13 @@ class ProcessesOverviewWidget extends BaseWidget
                         'precautionary' => 'gray',
                         default => 'gray',
                     })
-                    ->formatStateUsing(fn ($state) => match ($state) {
+                    ->formatStateUsing(fn (?string $state): string => $state ? match ($state) {
                         'knowledge' => 'Conhecimento',
                         'execution' => 'Execução',
                         'appeal' => 'Recursal',
                         'precautionary' => 'Cautelar',
                         default => $state,
-                    }),
+                    } : '-'),
 
                 Tables\Columns\IconColumn::make('is_urgent')
                     ->label('Urgente')

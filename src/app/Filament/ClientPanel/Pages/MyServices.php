@@ -35,7 +35,7 @@ class MyServices extends Page implements HasTable
                     ->label('Nº Ordem')
                     ->sortable()
                     ->searchable()
-                    ->formatStateUsing(fn ($state) => '#' . str_pad($state, 5, '0', STR_PAD_LEFT)),
+                    ->formatStateUsing(fn ($state) => $state ? ('#' . str_pad($state, 5, '0', STR_PAD_LEFT)) : '-'),
 
                 TextColumn::make('code')
                     ->label('Código')
@@ -65,8 +65,8 @@ class MyServices extends Page implements HasTable
                 TextColumn::make('status')
                     ->label('Status')
                     ->badge()
-                    ->formatStateUsing(fn ($state) => Service::getStatusOptions()[$state] ?? $state)
-                    ->color(fn (string $state): string => match ($state) {
+                    ->formatStateUsing(fn (?string $state): string => $state ? (Service::getStatusOptions()[$state] ?? $state) : '-')
+                    ->color(fn (?string $state): string => match ($state) {
                         'pendente' => 'warning',
                         'agendado' => 'info',
                         'em_andamento' => 'primary',
@@ -83,8 +83,8 @@ class MyServices extends Page implements HasTable
                 TextColumn::make('payment_status')
                     ->label('Pagamento')
                     ->badge()
-                    ->formatStateUsing(fn ($state) => Service::getPaymentStatusOptions()[$state] ?? $state)
-                    ->color(fn (string $state): string => match ($state) {
+                    ->formatStateUsing(fn (?string $state): string => $state ? (Service::getPaymentStatusOptions()[$state] ?? $state) : '-')
+                    ->color(fn (?string $state): string => match ($state) {
                         'pago' => 'success',
                         'parcial' => 'warning',
                         'pendente' => 'danger',

@@ -486,14 +486,14 @@ class ServiceResource extends Resource
                 Tables\Columns\TextColumn::make('status')
                     ->label('Status')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => Service::getStatusOptions()[$state] ?? $state)
-                    ->color(fn (string $state): string => Service::getStatusColors()[$state] ?? 'gray'),
+                    ->formatStateUsing(fn (?string $state): string => $state ? (Service::getStatusOptions()[$state] ?? $state) : '-')
+                    ->color(fn (?string $state): string => Service::getStatusColors()[$state] ?? 'gray'),
 
                 Tables\Columns\TextColumn::make('priority')
                     ->label('Prioridade')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => Service::getPriorityOptions()[$state] ?? $state)
-                    ->color(fn (string $state): string => Service::getPriorityColors()[$state] ?? 'gray')
+                    ->formatStateUsing(fn (?string $state): string => $state ? (Service::getPriorityOptions()[$state] ?? $state) : '-')
+                    ->color(fn (?string $state): string => Service::getPriorityColors()[$state] ?? 'gray')
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 Tables\Columns\TextColumn::make('total_price')
@@ -504,7 +504,7 @@ class ServiceResource extends Resource
                 Tables\Columns\TextColumn::make('payment_status')
                     ->label('Pagamento')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => Service::getPaymentStatusOptions()[$state] ?? $state)
+                    ->formatStateUsing(fn (?string $state): string => $state ? (Service::getPaymentStatusOptions()[$state] ?? $state) : '-')
                     ->color(fn (string $state): string => Service::getPaymentStatusColors()[$state] ?? 'gray'),
 
                 Tables\Columns\TextColumn::make('created_at')

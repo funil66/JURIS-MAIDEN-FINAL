@@ -103,7 +103,7 @@ class ViewContract extends ViewRecord
 
                         Components\TextEntry::make('type')
                             ->label('Tipo')
-                            ->formatStateUsing(fn (string $state): string => Contract::getTypeOptions()[$state] ?? $state),
+                            ->formatStateUsing(fn (?string $state): string => $state ? (Contract::getTypeOptions()[$state] ?? $state) : '-'),
 
                         Components\TextEntry::make('area')
                             ->label('Área')
@@ -123,7 +123,7 @@ class ViewContract extends ViewRecord
                         Components\TextEntry::make('fee_type')
                             ->label('Tipo de Honorário')
                             ->badge()
-                            ->formatStateUsing(fn (string $state): string => Contract::getFeeTypeOptions()[$state] ?? $state)
+                            ->formatStateUsing(fn (?string $state): string => $state ? (Contract::getFeeTypeOptions()[$state] ?? $state) : '-')
                             ->color('primary'),
 
                         Components\TextEntry::make('total_value')
