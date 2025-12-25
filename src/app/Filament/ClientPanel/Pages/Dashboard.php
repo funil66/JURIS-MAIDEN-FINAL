@@ -13,6 +13,7 @@ class Dashboard extends Page
     protected static ?string $navigationIcon = 'heroicon-o-home';
     protected static ?string $navigationLabel = 'Início';
     protected static ?string $title = 'Portal do Cliente';
+    protected static ?string $slug = 'client-dashboard';
     protected static string $view = 'filament.client-panel.pages.dashboard';
     protected static ?int $navigationSort = 1;
 
