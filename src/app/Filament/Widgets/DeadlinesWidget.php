@@ -25,7 +25,7 @@ class DeadlinesWidget extends BaseWidget
             ->query(
                 Proceeding::query()
                     ->with(['process.client'])
-                    ->where('is_deadline', true)
+                    ->where('has_deadline', true)
                     ->where('deadline_completed', false)
                     ->where('deadline_date', '>=', today()->subDays(7)) // Include overdue up to 7 days
                     ->orderBy('deadline_date', 'asc')
