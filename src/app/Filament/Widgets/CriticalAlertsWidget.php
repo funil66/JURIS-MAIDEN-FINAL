@@ -175,4 +175,93 @@ class CriticalAlertsWidget extends Widget
     {
         return $this->getAlerts()->where('type', 'warning')->count();
     }
+
+    // Helper methods to compute classes for alerts (keeps Blade simple and avoids complex inline expressions)
+    public function alertCardClass(array $alert): string
+    {
+        $type = $alert['type'] ?? 'default';
+
+        switch ($type) {
+            case 'danger':
+                return 'bg-gradient-to-br from-rose-50 to-rose-100 border-rose-200 hover:border-rose-400 hover:shadow-rose-100 dark:from-rose-900/20 dark:to-rose-900/10 dark:border-rose-700 dark:hover:border-rose-500';
+            case 'warning':
+                return 'bg-gradient-to-br from-amber-50 to-amber-100 border-amber-200 hover:border-amber-400 hover:shadow-amber-100 dark:from-amber-900/20 dark:to-amber-900/10 dark:border-amber-700 dark:hover:border-amber-500';
+            case 'info':
+                return 'bg-gradient-to-br from-sky-50 to-sky-100 border-sky-200 hover:border-sky-400 hover:shadow-sky-100 dark:from-sky-900/20 dark:to-sky-900/10 dark:border-sky-700 dark:hover:border-sky-500';
+            default:
+                return 'bg-gradient-to-br from-emerald-50 to-emerald-100 border-emerald-200 hover:border-emerald-400 hover:shadow-emerald-100 dark:from-emerald-900/20 dark:to-emerald-900/10 dark:border-emerald-700 dark:hover:border-emerald-500';
+        }
+    }
+
+    public function alertBgCircleClass(array $alert): string
+    {
+        $type = $alert['type'] ?? 'default';
+
+        return match ($type) {
+            'danger' => 'bg-rose-500',
+            'warning' => 'bg-amber-500',
+            'info' => 'bg-sky-500',
+            default => 'bg-emerald-500',
+        };
+    }
+
+    public function alertIconContainerClass(array $alert): string
+    {
+        $type = $alert['type'] ?? 'default';
+
+        return match ($type) {
+            'danger' => 'bg-rose-200 dark:bg-rose-800/50',
+            'warning' => 'bg-amber-200 dark:bg-amber-800/50',
+            'info' => 'bg-sky-200 dark:bg-sky-800/50',
+            default => 'bg-emerald-200 dark:bg-emerald-800/50',
+        };
+    }
+
+    public function alertTitleClass(array $alert): string
+    {
+        $type = $alert['type'] ?? 'default';
+
+        return match ($type) {
+            'danger' => 'text-rose-800 dark:text-rose-200',
+            'warning' => 'text-amber-800 dark:text-amber-200',
+            'info' => 'text-sky-800 dark:text-sky-200',
+            default => 'text-emerald-800 dark:text-emerald-200',
+        };
+    }
+
+    public function alertMessageClass(array $alert): string
+    {
+        $type = $alert['type'] ?? 'default';
+
+        return match ($type) {
+            'danger' => 'text-rose-600 dark:text-rose-300',
+            'warning' => 'text-amber-600 dark:text-amber-300',
+            'info' => 'text-sky-600 dark:text-sky-300',
+            default => 'text-emerald-600 dark:text-emerald-300',
+        };
+    }
+
+    public function alertArrowClass(array $alert): string
+    {
+        $type = $alert['type'] ?? 'default';
+
+        return match ($type) {
+            'danger' => 'text-rose-500',
+            'warning' => 'text-amber-500',
+            'info' => 'text-sky-500',
+            default => 'text-emerald-500',
+        };
+    }
+
+    public function alertIconClasses(array $alert): string
+    {
+        $type = $alert['type'] ?? 'default';
+
+        return match ($type) {
+            'danger' => 'text-rose-600 dark:text-rose-300',
+            'warning' => 'text-amber-600 dark:text-amber-300',
+            'info' => 'text-sky-600 dark:text-sky-300',
+            default => 'text-emerald-600 dark:text-emerald-300',
+        };
+    }
 }

@@ -6,6 +6,7 @@ use App\Models\SignatureRequest;
 use App\Models\DigitalCertificate;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
+use Illuminate\Support\Facades\Route;
 
 class SignatureStatsWidget extends BaseWidget
 {
@@ -37,7 +38,7 @@ class SignatureStatsWidget extends BaseWidget
                 ->descriptionIcon('heroicon-m-clock')
                 ->color($pending > 0 ? 'warning' : 'success')
                 ->chart([7, 4, 6, 8, 5, 3, $pending])
-                    ->url(route('filament.funil.resources.signature-requests.index', ['tableFilters[status][values][0]' => 'pending'])),
+                    ->url(Route::has('filament.funil.resources.signature-requests.index') ? route('filament.funil.resources.signature-requests.index', ['tableFilters[status][values][0]' => 'pending']) : null),
 
             Stat::make('Assinadas este Mês', $completedThisMonth)
                 ->description('Documentos concluídos')

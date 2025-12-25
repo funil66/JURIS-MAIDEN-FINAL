@@ -41,43 +41,12 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
                 @foreach($this->getAlerts() as $index => $alert)
                     @php
-                        $type = $alert['type'] ?? 'default';
-                        $cardClasses = match($type) {
-                            'danger' => 'bg-gradient-to-br from-rose-50 to-rose-100 border-rose-200 hover:border-rose-400 hover:shadow-rose-100 dark:from-rose-900/20 dark:to-rose-900/10 dark:border-rose-700 dark:hover:border-rose-500',
-                            'warning' => 'bg-gradient-to-br from-amber-50 to-amber-100 border-amber-200 hover:border-amber-400 hover:shadow-amber-100 dark:from-amber-900/20 dark:to-amber-900/10 dark:border-amber-700 dark:hover:border-amber-500',
-                            'info' => 'bg-gradient-to-br from-sky-50 to-sky-100 border-sky-200 hover:border-sky-400 hover:shadow-sky-100 dark:from-sky-900/20 dark:to-sky-900/10 dark:border-sky-700 dark:hover:border-sky-500',
-                            default => 'bg-gradient-to-br from-emerald-50 to-emerald-100 border-emerald-200 hover:border-emerald-400 hover:shadow-emerald-100 dark:from-emerald-900/20 dark:to-emerald-900/10 dark:border-emerald-700 dark:hover:border-emerald-500',
-                        };
-                        $bgCircleClass = match($type) {
-                            'danger' => 'bg-rose-500',
-                            'warning' => 'bg-amber-500',
-                            'info' => 'bg-sky-500',
-                            default => 'bg-emerald-500',
-                        };
-                        $iconContainerClasses = match($type) {
-                            'danger' => 'bg-rose-200 dark:bg-rose-800/50',
-                            'warning' => 'bg-amber-200 dark:bg-amber-800/50',
-                            'info' => 'bg-sky-200 dark:bg-sky-800/50',
-                            default => 'bg-emerald-200 dark:bg-emerald-800/50',
-                        };
-                        $titleClasses = match($type) {
-                            'danger' => 'text-rose-800 dark:text-rose-200',
-                            'warning' => 'text-amber-800 dark:text-amber-200',
-                            'info' => 'text-sky-800 dark:text-sky-200',
-                            default => 'text-emerald-800 dark:text-emerald-200',
-                        };
-                        $messageClasses = match($type) {
-                            'danger' => 'text-rose-600 dark:text-rose-300',
-                            'warning' => 'text-amber-600 dark:text-amber-300',
-                            'info' => 'text-sky-600 dark:text-sky-300',
-                            default => 'text-emerald-600 dark:text-emerald-300',
-                        };
-                        $arrowClass = match($type) {
-                            'danger' => 'text-rose-500',
-                            'warning' => 'text-amber-500',
-                            'info' => 'text-sky-500',
-                            default => 'text-emerald-500',
-                        };
+                        $cardClasses = $this->alertCardClass($alert);
+                        $bgCircleClass = $this->alertBgCircleClass($alert);
+                        $iconContainerClasses = $this->alertIconContainerClass($alert);
+                        $titleClasses = $this->alertTitleClass($alert);
+                        $messageClasses = $this->alertMessageClass($alert);
+                        $arrowClass = $this->alertArrowClass($alert);
                     @endphp
                     <a href="{{ $alert['link'] }}"
                        class="group relative block p-5 rounded-2xl border-2 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 overflow-hidden {{ $cardClasses }}"
@@ -91,12 +60,7 @@
                         <div class="relative flex items-start gap-4">
                             <div class="flex-shrink-0 p-3 rounded-xl transition-transform group-hover:scale-110 {{ $iconContainerClasses }}">
                                 @php
-                                    $iconClasses = match($alert['type']) {
-                                        'danger' => 'text-rose-600 dark:text-rose-300',
-                                        'warning' => 'text-amber-600 dark:text-amber-300',
-                                        'info' => 'text-sky-600 dark:text-sky-300',
-                                        default => 'text-emerald-600 dark:text-emerald-300',
-                                    };
+                                    $iconClasses = $this->alertIconClasses($alert);
                                 @endphp
                                 <x-dynamic-component :component="$alert['icon']" class="w-6 h-6 {{ $iconClasses }}" />
                             </div>
@@ -111,12 +75,7 @@
                         {{-- Arrow indicator --}}
                         <div class="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0 transition-all">
                             @php
-                                $arrowClass = match($alert['type']) {
-                                    'danger' => 'text-rose-500',
-                                    'warning' => 'text-amber-500',
-                                    'info' => 'text-sky-500',
-                                    default => 'text-emerald-500',
-                                };
+                                $arrowClass = $this->alertArrowClass($alert);
                             @endphp
                             <x-heroicon-o-arrow-right class="w-5 h-5 {{ $arrowClass }}" />
                         </div>
