@@ -285,13 +285,22 @@ class ProceedingResource extends Resource
                     ->searchable()
                     ->tooltip(fn ($record) => $record?->title),
 
-                Tables\Columns\TextColumn::make('process.title')
+                Tables\Columns\TextColumn::make('process_title')
                     ->label('Processo')
                     ->limit(30)
-                    ->searchable()
-                    ->formatStateUsing(function (?Proceeding $record) {
+                    ->getStateUsing(function (?Proceeding $record) {
                         if (!$record) return '';
                         return $record->process?->title ?? '';
+                    })
+                    ->searchable(query: function ($query, $data) {
+                        return $query->whereHas('process', function ($q) use ($data) {
+                            $q->where('title', 'like', "%{$data}%");
+                        });
+                    })
+                    ->sortable(query: function ($query, $direction) {
+                        return $query->join('processes', 'proceedings.process_id', '=', 'processes.id')
+                                     ->orderBy('processes.title', $direction)
+                                     ->select('proceedings.*');
                     })
                     ->default('')
                     ->toggleable(),
@@ -326,11 +335,21 @@ class ProceedingResource extends Resource
                     ->formatStateUsing(fn (?string $state): string => $state ? (Proceeding::getSourceOptions()[$state] ?? $state) : '-')
                     ->toggleable(isToggledHiddenByDefault: true),
 
-                Tables\Columns\TextColumn::make('user.name')
+                Tables\Columns\TextColumn::make('user_name')
                     ->label('Registrado por')
-                    ->formatStateUsing(function (?Proceeding $record) {
+                    ->getStateUsing(function (?Proceeding $record) {
                         if (!$record) return '';
                         return $record->user?->name ?? '';
+                    })
+                    ->searchable(query: function ($query, $data) {
+                        return $query->whereHas('user', function ($q) use ($data) {
+                            $q->where('name', 'like', "%{$data}%");
+                        });
+                    })
+                    ->sortable(query: function ($query, $direction) {
+                        return $query->join('users', 'proceedings.user_id', '=', 'users.id')
+                                     ->orderBy('users.name', $direction)
+                                     ->select('proceedings.*');
                     })
                     ->default('')
                     ->toggleable(isToggledHiddenByDefault: true),

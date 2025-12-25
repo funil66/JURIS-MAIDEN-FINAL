@@ -360,24 +360,42 @@ class DiligenceResource extends Resource
                     ->searchable()
                     ->tooltip(fn ($record) => $record?->title),
 
-                Tables\Columns\TextColumn::make('process.title')
+                Tables\Columns\TextColumn::make('process_title')
                     ->label('Processo')
                     ->limit(25)
-                    ->searchable()
-                    ->formatStateUsing(function (?Diligence $record) {
+                    ->getStateUsing(function (?Diligence $record) {
                         if (!$record) return '';
                         return $record->process?->title ?? '';
+                    })
+                    ->searchable(query: function ($query, $data) {
+                        return $query->whereHas('process', function ($q) use ($data) {
+                            $q->where('title', 'like', "%{$data}%");
+                        });
+                    })
+                    ->sortable(query: function ($query, $direction) {
+                        return $query->join('processes', 'diligences.process_id', '=', 'processes.id')
+                                     ->orderBy('processes.title', $direction)
+                                     ->select('diligences.*');
                     })
                     ->default('')
                     ->toggleable(),
 
-                Tables\Columns\TextColumn::make('client.name')
+                Tables\Columns\TextColumn::make('client_name')
                     ->label('Cliente')
                     ->limit(20)
-                    ->searchable()
-                    ->formatStateUsing(function (?Diligence $record) {
+                    ->getStateUsing(function (?Diligence $record) {
                         if (!$record) return '';
                         return $record->client?->name ?? '';
+                    })
+                    ->searchable(query: function ($query, $data) {
+                        return $query->whereHas('client', function ($q) use ($data) {
+                            $q->where('name', 'like', "%{$data}%");
+                        });
+                    })
+                    ->sortable(query: function ($query, $direction) {
+                        return $query->join('clients', 'diligences.client_id', '=', 'clients.id')
+                                     ->orderBy('clients.name', $direction)
+                                     ->select('diligences.*');
                     })
                     ->default('')
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -388,12 +406,21 @@ class DiligenceResource extends Resource
                     ->placeholder('-')
                     ->toggleable(),
 
-                Tables\Columns\TextColumn::make('assignedUser.name')
+                Tables\Columns\TextColumn::make('assigned_user_name')
                     ->label('Responsável')
-                    ->searchable()
-                    ->formatStateUsing(function (?Diligence $record) {
+                    ->getStateUsing(function (?Diligence $record) {
                         if (!$record) return '';
                         return $record->assignedUser?->name ?? '';
+                    })
+                    ->searchable(query: function ($query, $data) {
+                        return $query->whereHas('assignedUser', function ($q) use ($data) {
+                            $q->where('name', 'like', "%{$data}%");
+                        });
+                    })
+                    ->sortable(query: function ($query, $direction) {
+                        return $query->join('users as assigned_users', 'diligences.assigned_user_id', '=', 'assigned_users.id')
+                                     ->orderBy('assigned_users.name', $direction)
+                                     ->select('diligences.*');
                     })
                     ->default('')
                     ->toggleable(),
