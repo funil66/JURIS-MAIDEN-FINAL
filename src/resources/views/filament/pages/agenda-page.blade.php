@@ -221,12 +221,12 @@
                 <h3 class="text-lg font-bold text-white mb-4">Ações Rápidas</h3>
                 <div class="space-y-2">
                     <a href="{{ route('filament.funil.resources.events.create') }}" 
-                       class="flex items-center gap-3 px-4 py-3 bg-white/10 rounded-xl text-white hover:bg-white/20 transition-colors">
+                       class="flex items-center gap-3 px-3 sm:px-4 py-2 sm:py-3 bg-white/10 rounded-xl text-white hover:bg-white/20 transition-colors w-full sm:w-auto justify-center sm:justify-start">
                         <x-heroicon-o-plus-circle class="w-5 h-5" />
                         <span class="font-medium">Novo Evento</span>
                     </a>
                     <a href="{{ route('filament.funil.resources.diligences.create') }}" 
-                       class="flex items-center gap-3 px-4 py-3 bg-white/10 rounded-xl text-white hover:bg-white/20 transition-colors">
+                       class="flex items-center gap-3 px-3 sm:px-4 py-2 sm:py-3 bg-white/10 rounded-xl text-white hover:bg-white/20 transition-colors w-full sm:w-auto justify-center sm:justify-start">
                         <x-heroicon-o-clipboard-document-check class="w-5 h-5" />
                         <span class="font-medium">Nova Diligência</span>
                     </a>

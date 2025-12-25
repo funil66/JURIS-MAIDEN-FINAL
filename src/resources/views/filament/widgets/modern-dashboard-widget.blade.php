@@ -22,14 +22,14 @@
             </div>
 
             {{-- Ações Rápidas --}}
-            <div class="flex flex-wrap gap-2">
+            <div class="flex flex-wrap gap-2 w-full">
                 @foreach($quickActions as $action)
                     <a href="{{ $action['url'] }}" 
-                       class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 
+                       class="inline-flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 
                               bg-{{ $action['color'] }}-50 text-{{ $action['color'] }}-700 
                               hover:bg-{{ $action['color'] }}-100 hover:scale-105 hover:shadow-lg
                               dark:bg-{{ $action['color'] }}-900/30 dark:text-{{ $action['color'] }}-300 
-                              dark:hover:bg-{{ $action['color'] }}-900/50">
+                              dark:hover:bg-{{ $action['color'] }}-900/50 w-full sm:w-auto justify-center sm:justify-start">
                         <x-dynamic-component :component="$action['icon']" class="w-5 h-5" />
                         <span class="hidden sm:inline">{{ $action['label'] }}</span>
                     </a>
@@ -38,7 +38,7 @@
         </div>
 
         {{-- Cards de Estatísticas --}}
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {{-- Processos --}}
             <div class="relative overflow-hidden bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group">
                 <div class="absolute top-0 right-0 w-32 h-32 transform translate-x-8 -translate-y-8">
