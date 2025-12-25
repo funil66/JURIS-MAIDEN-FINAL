@@ -364,7 +364,10 @@ class DiligenceResource extends Resource
                     ->label('Processo')
                     ->limit(25)
                     ->searchable()
-                    ->formatStateUsing(fn ($record) => $record?->process?->title ?? '')
+                    ->formatStateUsing(function (?Diligence $record) {
+                        if (!$record) return '';
+                        return $record->process?->title ?? '';
+                    })
                     ->default('')
                     ->toggleable(),
 
@@ -372,7 +375,10 @@ class DiligenceResource extends Resource
                     ->label('Cliente')
                     ->limit(20)
                     ->searchable()
-                    ->formatStateUsing(fn ($record) => $record?->client?->name ?? '')
+                    ->formatStateUsing(function (?Diligence $record) {
+                        if (!$record) return '';
+                        return $record->client?->name ?? '';
+                    })
                     ->default('')
                     ->toggleable(isToggledHiddenByDefault: true),
 
@@ -385,7 +391,10 @@ class DiligenceResource extends Resource
                 Tables\Columns\TextColumn::make('assignedUser.name')
                     ->label('Responsável')
                     ->searchable()
-                    ->formatStateUsing(fn ($record) => $record?->assignedUser?->name ?? '')
+                    ->formatStateUsing(function (?Diligence $record) {
+                        if (!$record) return '';
+                        return $record->assignedUser?->name ?? '';
+                    })
                     ->default('')
                     ->toggleable(),
 
