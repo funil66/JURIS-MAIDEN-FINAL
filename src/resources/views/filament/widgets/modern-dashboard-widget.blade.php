@@ -40,7 +40,7 @@
         {{-- Cards de Estatísticas --}}
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {{-- Processos --}}
-            <div class="relative overflow-hidden bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group">
+            <div class="relative overflow-hidden bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-lg card-anim">
                 <div class="absolute top-0 right-0 w-32 h-32 transform translate-x-8 -translate-y-8">
                     <div class="absolute inset-0 bg-indigo-500 rounded-full opacity-10 group-hover:opacity-20 transition-opacity"></div>
                 </div>

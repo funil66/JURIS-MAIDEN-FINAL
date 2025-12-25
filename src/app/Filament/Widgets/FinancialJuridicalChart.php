@@ -108,6 +108,13 @@ class FinancialJuridicalChart extends ChartWidget
                     'intersect' => false,
                 ],
             ],
+            // Improve responsiveness and animations
+            'responsive' => true,
+            'maintainAspectRatio' => false,
+            'animation' => [
+                'duration' => 800,
+                'easing' => 'easeOutQuart',
+            ],
             'scales' => [
                 'y' => [
                     'type' => 'linear',
