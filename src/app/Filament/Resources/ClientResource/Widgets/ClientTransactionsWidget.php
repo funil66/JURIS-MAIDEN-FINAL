@@ -60,13 +60,13 @@ class ClientTransactionsWidget extends BaseWidget
                 Tables\Columns\TextColumn::make('status')
                     ->label('Status')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => match($state) {
+                    ->formatStateUsing(fn (?string $state): string => $state ? match($state) {
                         'paid' => '✅ Pago',
                         'pending' => '⏳ Pendente',
                         'cancelled' => '❌ Cancelado',
                         default => $state,
-                    })
-                    ->color(fn (string $state): string => match($state) {
+                    } : '-')
+                    ->color(fn (?string $state): string => match($state) {
                         'paid' => 'success',
                         'pending' => 'warning',
                         'cancelled' => 'danger',

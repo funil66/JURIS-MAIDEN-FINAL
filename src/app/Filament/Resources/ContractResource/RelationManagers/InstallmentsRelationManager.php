@@ -177,7 +177,7 @@ class InstallmentsRelationManager extends RelationManager
                     ->label('Status')
                     ->badge()
                     ->formatStateUsing(fn (?string $state): string => $state ? (ContractInstallment::getStatusOptions()[$state] ?? $state) : '-')
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn (?string $state): string => match ($state) {
                         'pending' => 'warning',
                         'paid' => 'success',
                         'overdue' => 'danger',

@@ -72,8 +72,8 @@ class ViewContract extends ViewRecord
                         Components\TextEntry::make('status')
                             ->label('Status')
                             ->badge()
-                            ->formatStateUsing(fn (string $state): string => Contract::getStatusOptions()[$state] ?? $state)
-                            ->color(fn (string $state): string => match ($state) {
+                            ->formatStateUsing(fn (?string $state): string => $state ? (Contract::getStatusOptions()[$state] ?? $state) : '-')
+                            ->color(fn (?string $state): string => match ($state) {
                                 'draft' => 'gray',
                                 'pending_signature' => 'warning',
                                 'active' => 'success',

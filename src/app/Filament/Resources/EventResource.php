@@ -201,8 +201,8 @@ class EventResource extends Resource
                 Tables\Columns\TextColumn::make('type')
                     ->label('Tipo')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => Event::getTypeOptions()[$state] ?? $state)
-                    ->color(fn (string $state): string => match($state) {
+                    ->formatStateUsing(fn (?string $state): string => $state ? (Event::getTypeOptions()[$state] ?? $state) : '-')
+                    ->color(fn (?string $state): string => match($state) {
                         'hearing' => 'danger',
                         'deadline' => 'warning',
                         'meeting' => 'info',
@@ -236,8 +236,8 @@ class EventResource extends Resource
                 Tables\Columns\TextColumn::make('status')
                     ->label('Status')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => Event::getStatusOptions()[$state] ?? $state)
-                    ->color(fn (string $state): string => match($state) {
+                    ->formatStateUsing(fn (?string $state): string => $state ? (Event::getStatusOptions()[$state] ?? $state) : '-')
+                    ->color(fn (?string $state): string => match($state) {
                         'scheduled' => 'warning',
                         'confirmed' => 'info',
                         'completed' => 'success',

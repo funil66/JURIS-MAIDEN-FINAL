@@ -117,7 +117,7 @@ class InvoicesRelationManager extends RelationManager
                     ->label('Status')
                     ->badge()
                     ->formatStateUsing(fn (?string $state): string => $state ? (Invoice::getStatusOptions()[$state] ?? $state) : '-')
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn (?string $state): string => match ($state) {
                         'draft' => 'gray',
                         'pending' => 'warning',
                         'partial' => 'info',

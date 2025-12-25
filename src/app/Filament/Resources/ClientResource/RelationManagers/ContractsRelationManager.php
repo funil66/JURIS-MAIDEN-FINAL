@@ -123,7 +123,7 @@ class ContractsRelationManager extends RelationManager
                     ->label('Status')
                     ->badge()
                     ->formatStateUsing(fn (?string $state): string => $state ? (Contract::getStatusOptions()[$state] ?? $state) : '-')
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn (?string $state): string => match ($state) {
                         'draft' => 'gray',
                         'pending_signature' => 'warning',
                         'active' => 'success',

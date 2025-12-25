@@ -238,7 +238,7 @@ class TransactionResource extends Resource
                     ->badge()
                     ->formatStateUsing(fn (?string $state): string => $state === 'income' ? 'Receita' : 'Despesa')
                     ->color(fn (?string $state): string => $state === 'income' ? 'success' : 'danger')
-                    ->icon(fn (string $state): string => $state === 'income' ? 'heroicon-o-arrow-trending-up' : 'heroicon-o-arrow-trending-down'),
+                    ->icon(fn (?string $state): string => $state === 'income' ? 'heroicon-o-arrow-trending-up' : 'heroicon-o-arrow-trending-down'),
 
                 Tables\Columns\TextColumn::make('description')
                     ->label('Descrição')

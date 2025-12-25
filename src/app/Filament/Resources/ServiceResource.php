@@ -505,7 +505,7 @@ class ServiceResource extends Resource
                     ->label('Pagamento')
                     ->badge()
                     ->formatStateUsing(fn (?string $state): string => $state ? (Service::getPaymentStatusOptions()[$state] ?? $state) : '-')
-                    ->color(fn (string $state): string => Service::getPaymentStatusColors()[$state] ?? 'gray'),
+                    ->color(fn (?string $state): string => $state ? (Service::getPaymentStatusColors()[$state] ?? 'gray') : 'gray'),
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Criado em')

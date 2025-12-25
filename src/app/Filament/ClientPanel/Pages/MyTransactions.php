@@ -84,7 +84,7 @@ class MyTransactions extends Page implements HasTable
                         'cancelled' => 'Cancelado',
                         default => $state,
                     })
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn (?string $state): string => match ($state) {
                         'completed' => 'success',
                         'pending' => 'warning',
                         'cancelled' => 'danger',

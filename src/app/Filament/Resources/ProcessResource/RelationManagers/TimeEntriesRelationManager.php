@@ -133,7 +133,7 @@ class TimeEntriesRelationManager extends RelationManager
                     ->label('Status')
                     ->badge()
                     ->formatStateUsing(fn (?string $state): string => $state ? (TimeEntry::getStatusOptions()[$state] ?? $state) : '-')
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn (?string $state): string => match ($state) {
                         'draft' => 'gray',
                         'submitted' => 'warning',
                         'approved' => 'success',

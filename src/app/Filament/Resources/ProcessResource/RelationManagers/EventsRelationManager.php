@@ -140,7 +140,7 @@ class EventsRelationManager extends RelationManager
                         'other' => 'Outro',
                         default => $state,
                     } : '-')
-                    ->color(fn (string $state): string => match ($state) {
+->color(fn (?string $state): string => match ($state) {
                         'hearing' => 'danger',
                         'meeting' => 'info',
                         'deadline' => 'warning',
@@ -177,7 +177,7 @@ class EventsRelationManager extends RelationManager
                         'rescheduled' => 'Remarcado',
                         default => $state,
                     } : '-')
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn (?string $state): string => match ($state) {
                         'scheduled' => 'warning',
                         'confirmed' => 'info',
                         'completed' => 'success',

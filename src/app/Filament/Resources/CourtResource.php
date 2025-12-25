@@ -299,7 +299,7 @@ class CourtResource extends Resource
                     ->label('Jurisdição')
                     ->formatStateUsing(fn (?string $state): string => $state ? (Court::JURISDICTIONS[$state] ?? $state) : '-')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn (?string $state): string => match ($state) {
                         'federal' => 'info',
                         'estadual' => 'success',
                         'trabalhista' => 'warning',

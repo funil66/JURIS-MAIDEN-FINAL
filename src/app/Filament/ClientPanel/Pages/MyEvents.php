@@ -37,8 +37,8 @@ class MyEvents extends Page implements HasTable
                 TextColumn::make('type')
                     ->label('Tipo')
                     ->badge()
-                    ->formatStateUsing(fn ($state) => Event::getTypeOptions()[$state] ?? $state)
-                    ->color(fn (string $state): string => match ($state) {
+                    ->formatStateUsing(fn (?string $state): string => $state ? (Event::getTypeOptions()[$state] ?? $state) : '-')
+                    ->color(fn (?string $state): string => match ($state) {
                         'hearing' => 'danger',
                         'deadline' => 'warning',
                         'meeting' => 'info',
@@ -63,7 +63,7 @@ class MyEvents extends Page implements HasTable
                     ->label('Status')
                     ->badge()
                     ->formatStateUsing(fn ($state) => Event::getStatusOptions()[$state] ?? $state)
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn (?string $state): string => match ($state) {
                         'scheduled' => 'warning',
                         'confirmed' => 'info',
                         'completed' => 'success',

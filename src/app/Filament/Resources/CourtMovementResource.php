@@ -154,7 +154,7 @@ class CourtMovementResource extends Resource
                 Tables\Columns\TextColumn::make('status')
                     ->label('Status')
                     ->badge()
-                    ->color(fn (string $state): string => CourtMovement::STATUS_COLORS[$state] ?? 'gray')
+                    ->color(fn (?string $state): string => $state ? (CourtMovement::STATUS_COLORS[$state] ?? 'gray') : 'gray')
                     ->formatStateUsing(fn (?string $state): string => $state ? (CourtMovement::STATUSES[$state] ?? $state) : '-')
                     ->sortable(),
 

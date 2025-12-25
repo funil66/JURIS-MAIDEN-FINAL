@@ -37,7 +37,7 @@ class UpcomingEvents extends BaseWidget
                     ->label('Tipo')
                     ->badge()
                     ->formatStateUsing(fn (?string $state): string => $state ? (Event::getTypeOptions()[$state] ?? $state) : '-')
-                    ->color(fn (string $state): string => match($state) {
+                    ->color(fn (?string $state): string => match($state) {
                         'hearing' => 'danger',
                         'deadline' => 'warning',
                         'meeting' => 'info',
