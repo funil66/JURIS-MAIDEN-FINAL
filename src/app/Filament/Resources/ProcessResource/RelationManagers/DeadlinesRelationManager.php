@@ -123,7 +123,7 @@ class DeadlinesRelationManager extends RelationManager
                     ->label('Vencimento')
                     ->date('d/m/Y')
                     ->sortable()
-                    ->color(fn ($record) => $record->status_color)
+                    ->color(fn ($record) => $record?->status_color)
                     ->weight('bold')
                     ->description(fn ($record) => $this->getDaysDescription($record)),
 
@@ -135,13 +135,13 @@ class DeadlinesRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('priority')
                     ->label('Prioridade')
                     ->badge()
-                    ->color(fn ($record) => $record->priority_color)
+                    ->color(fn ($record) => $record?->priority_color)
                     ->formatStateUsing(fn ($state) => Deadline::PRIORITIES[$state] ?? $state),
 
                 Tables\Columns\TextColumn::make('status')
                     ->label('Status')
                     ->badge()
-                    ->color(fn ($record) => $record->status_color)
+                    ->color(fn ($record) => $record?->status_color)
                     ->formatStateUsing(fn ($state) => Deadline::STATUSES[$state] ?? $state),
 
                 Tables\Columns\TextColumn::make('assignedUser.name')

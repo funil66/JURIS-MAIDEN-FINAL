@@ -205,7 +205,7 @@ class SignatureRequestResource extends Resource
                     ->label('Documento')
                     ->searchable()
                     ->limit(40)
-                    ->tooltip(fn ($record) => $record->document_name),
+                    ->tooltip(fn ($record) => $record?->document_name),
 
                 Tables\Columns\TextColumn::make('signers_count')
                     ->label('Signatários')
@@ -215,9 +215,9 @@ class SignatureRequestResource extends Resource
 
                 Tables\Columns\TextColumn::make('progress')
                     ->label('Progresso')
-                    ->getStateUsing(fn ($record) => $record->signed_count . '/' . $record->total_signers)
+                    ->getStateUsing(fn ($record) => $record?->signed_count . '/' . $record?->total_signers)
                     ->badge()
-                    ->color(fn ($record) => $record->progress === 100 ? 'success' : 'warning'),
+                    ->color(fn ($record) => $record?->progress === 100 ? 'success' : 'warning'),
 
                 Tables\Columns\TextColumn::make('signature_type')
                     ->label('Tipo')
@@ -236,7 +236,7 @@ class SignatureRequestResource extends Resource
                     ->label('Expira em')
                     ->dateTime('d/m/Y H:i')
                     ->sortable()
-                    ->color(fn ($record) => $record->isExpired() ? 'danger' : null),
+                    ->color(fn ($record) => $record?->isExpired() ? 'danger' : null),
 
                 Tables\Columns\TextColumn::make('requester.name')
                     ->label('Solicitado por')

@@ -99,7 +99,7 @@ class ViewProceeding extends ViewRecord
                         Components\TextEntry::make('deadline_date')
                             ->label('Data do Prazo')
                             ->date('d/m/Y')
-                            ->color(fn ($record) => $record->deadline_color),
+                            ->color(fn ($record) => $record?->deadline_color),
 
                         Components\TextEntry::make('deadline_days')
                             ->label('Dias Úteis')
@@ -111,7 +111,7 @@ class ViewProceeding extends ViewRecord
                                 ? ($state < 0 ? abs($state) . ' dias de atraso' : $state . ' dias')
                                 : '-'
                             )
-                            ->color(fn ($record) => $record->deadline_color),
+                            ->color(fn ($record) => $record?->deadline_color),
 
                         Components\IconEntry::make('deadline_completed')
                             ->label('Cumprido')

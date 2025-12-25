@@ -92,8 +92,8 @@ class DiligencesWidget extends BaseWidget
                 Tables\Columns\TextColumn::make('scheduled_date')
                     ->label('Data')
                     ->date('d/m')
-                    ->color(fn ($record) => $record->scheduled_date && $record->scheduled_date < today() ? 'danger' : 'gray')
-                    ->description(fn ($record) => $record->scheduled_date ? ($record->scheduled_date < today() ? 'Vencida!' : \Carbon\Carbon::parse($record->scheduled_date)->diffForHumans()) : null),
+                    ->color(fn ($record) => $record?->scheduled_date && $record->scheduled_date < today() ? 'danger' : 'gray')
+                    ->description(fn ($record) => $record?->scheduled_date ? ($record->scheduled_date < today() ? 'Vencida!' : \Carbon\Carbon::parse($record->scheduled_date)->diffForHumans()) : null),
 
                 Tables\Columns\TextColumn::make('assignedUser.name')
                     ->label('Responsável')

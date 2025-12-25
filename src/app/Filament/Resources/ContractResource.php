@@ -382,7 +382,7 @@ class ContractResource extends Resource
                     ->label('Título')
                     ->searchable()
                     ->limit(30)
-                    ->tooltip(fn ($record) => $record->title),
+                    ->tooltip(fn ($record) => $record?->title),
 
                 Tables\Columns\TextColumn::make('fee_type')
                     ->label('Tipo Hon.')
@@ -425,7 +425,7 @@ class ContractResource extends Resource
                     ->label('Término')
                     ->date('d/m/Y')
                     ->sortable()
-                    ->color(fn ($record) => $record->is_expiring_soon ? 'warning' : ($record->is_expired ? 'danger' : null))
+                    ->color(fn ($record) => $record?->is_expiring_soon ? 'warning' : ($record?->is_expired ? 'danger' : null))
                     ->toggleable(),
 
                 Tables\Columns\IconColumn::make('is_signed')

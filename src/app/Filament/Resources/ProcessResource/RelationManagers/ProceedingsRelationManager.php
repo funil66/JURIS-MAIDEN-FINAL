@@ -154,7 +154,7 @@ class ProceedingsRelationManager extends RelationManager
                     ->date('d/m/Y')
                     ->sortable()
                     ->placeholder('-')
-                    ->color(fn ($record) => $record->deadline_color),
+                    ->color(fn ($record) => $record?->deadline_color),
 
                 Tables\Columns\IconColumn::make('deadline_completed')
                     ->label('Cumpr.')

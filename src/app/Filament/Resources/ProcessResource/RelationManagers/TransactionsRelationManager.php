@@ -186,7 +186,7 @@ class TransactionsRelationManager extends RelationManager
                     ->label('Valor')
                     ->money('BRL')
                     ->sortable()
-                    ->color(fn ($record) => $record->type === 'income' ? 'success' : 'danger'),
+                    ->color(fn ($record) => $record?->type === 'income' ? 'success' : 'danger'),
 
                 Tables\Columns\TextColumn::make('transaction_date')
                     ->label('Data')

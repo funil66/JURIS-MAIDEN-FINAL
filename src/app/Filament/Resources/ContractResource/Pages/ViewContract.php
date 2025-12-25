@@ -226,7 +226,7 @@ class ViewContract extends ViewRecord
                         Components\TextEntry::make('end_date')
                             ->label('Término')
                             ->date('d/m/Y')
-                            ->color(fn ($record) => $record->is_expiring_soon ? 'warning' : ($record->is_expired ? 'danger' : null)),
+                            ->color(fn ($record) => $record?->is_expiring_soon ? 'warning' : ($record?->is_expired ? 'danger' : null)),
 
                         Components\TextEntry::make('signature_date')
                             ->label('Assinatura')

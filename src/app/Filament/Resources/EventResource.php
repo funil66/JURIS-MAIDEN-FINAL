@@ -215,7 +215,7 @@ class EventResource extends Resource
                     ->label('Data/Hora')
                     ->dateTime('d/m/Y H:i')
                     ->sortable()
-                    ->color(fn ($record) => $record->isPast() && $record->status !== 'completed' ? 'danger' : null),
+                    ->color(fn ($record) => $record?->isPast() && $record?->status !== 'completed' ? 'danger' : null),
 
                 Tables\Columns\TextColumn::make('client.name')
                     ->label('Cliente')

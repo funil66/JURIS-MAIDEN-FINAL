@@ -283,7 +283,7 @@ class ProceedingResource extends Resource
                     ->label('Título')
                     ->limit(50)
                     ->searchable()
-                    ->tooltip(fn ($record) => $record->title),
+                    ->tooltip(fn ($record) => $record?->title),
 
                 Tables\Columns\TextColumn::make('process.title')
                     ->label('Processo')
@@ -296,8 +296,8 @@ class ProceedingResource extends Resource
                     ->date('d/m/Y')
                     ->sortable()
                     ->placeholder('-')
-                    ->color(fn ($record) => $record->deadline_color)
-                    ->icon(fn ($record) => $record->is_overdue ? 'heroicon-o-exclamation-triangle' : null),
+                    ->color(fn ($record) => $record?->deadline_color)
+                    ->icon(fn ($record) => $record?->is_overdue ? 'heroicon-o-exclamation-triangle' : null),
 
                 Tables\Columns\IconColumn::make('deadline_completed')
                     ->label('Cumpr.')

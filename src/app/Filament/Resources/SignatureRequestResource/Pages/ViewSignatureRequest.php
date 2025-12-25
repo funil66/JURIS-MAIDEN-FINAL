@@ -94,14 +94,14 @@ class ViewSignatureRequest extends ViewRecord
 
                                 Components\TextEntry::make('progress')
                                     ->label('Progresso')
-                                    ->getStateUsing(fn ($record) => "{$record->signed_count} de {$record->total_signers} assinaturas")
+                                    ->getStateUsing(fn ($record) => "{$record?->signed_count} de {$record?->total_signers} assinaturas")
                                     ->badge()
-                                    ->color(fn ($record) => $record->progress === 100 ? 'success' : 'warning'),
+                                    ->color(fn ($record) => $record?->progress === 100 ? 'success' : 'warning'),
 
                                 Components\TextEntry::make('expires_at')
                                     ->label('Expira em')
                                     ->dateTime('d/m/Y H:i')
-                                    ->color(fn ($record) => $record->isExpired() ? 'danger' : null),
+                                    ->color(fn ($record) => $record?->isExpired() ? 'danger' : null),
                             ]),
                     ]),
 
@@ -202,8 +202,8 @@ class ViewSignatureRequest extends ViewRecord
                                                 Components\TextEntry::make('action')
                                                     ->label('Ação')
                                                     ->badge()
-                                                    ->formatStateUsing(fn ($record) => $record->action_label)
-                                                    ->color(fn ($record) => $record->action_color),
+                                                    ->formatStateUsing(fn ($record) => $record?->action_label)
+                                                    ->color(fn ($record) => $record?->action_color),
 
                                                 Components\TextEntry::make('actor_name')
                                                     ->label('Executado por'),

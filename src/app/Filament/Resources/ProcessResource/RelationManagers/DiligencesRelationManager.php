@@ -120,7 +120,7 @@ class DiligencesRelationManager extends RelationManager
                     ->label('Data')
                     ->date('d/m/Y')
                     ->sortable()
-                    ->color(fn ($record) => $record->is_overdue ? 'danger' : null),
+                    ->color(fn ($record) => $record?->is_overdue ? 'danger' : null),
 
                 Tables\Columns\TextColumn::make('scheduled_time')
                     ->label('Hora')

@@ -229,7 +229,7 @@ class DeadlineResource extends Resource
                     ->label('Vencimento')
                     ->date('d/m/Y')
                     ->sortable()
-                    ->color(fn ($record) => $record->status_color)
+                    ->color(fn ($record) => $record?->status_color)
                     ->weight('bold')
                     ->description(fn ($record) => static::getDaysRemainingDescription($record)),
 
@@ -237,7 +237,7 @@ class DeadlineResource extends Resource
                     ->label('Prazo')
                     ->limit(40)
                     ->searchable()
-                    ->tooltip(fn ($record) => $record->title),
+                    ->tooltip(fn ($record) => $record?->title),
 
                 Tables\Columns\TextColumn::make('process.uid')
                     ->label('Processo')
@@ -436,7 +436,7 @@ class DeadlineResource extends Resource
                         Infolists\Components\TextEntry::make('due_date')
                             ->label('Data de Vencimento')
                             ->date('d/m/Y')
-                            ->color(fn ($record) => $record->status_color)
+                            ->color(fn ($record) => $record?->status_color)
                             ->weight('bold'),
 
                         Infolists\Components\TextEntry::make('original_due_date')
@@ -446,11 +446,11 @@ class DeadlineResource extends Resource
 
                         Infolists\Components\TextEntry::make('days_remaining')
                             ->label('Dias Restantes')
-                            ->getStateUsing(fn ($record) => $record->isPending() 
+                            ->getStateUsing(fn ($record) => $record?->isPending() 
                                 ? ($record->days_remaining >= 0 ? $record->days_remaining . ' dias' : abs($record->days_remaining) . ' dias vencido')
                                 : '-'
                             )
-                            ->color(fn ($record) => $record->status_color),
+                            ->color(fn ($record) => $record?->status_color),
 
                         Infolists\Components\TextEntry::make('days_count')
                             ->label('Quantidade de Dias'),
@@ -471,13 +471,13 @@ class DeadlineResource extends Resource
                         Infolists\Components\TextEntry::make('status')
                             ->label('Status')
                             ->badge()
-                            ->color(fn ($record) => $record->status_color)
+                            ->color(fn ($record) => $record?->status_color)
                             ->formatStateUsing(fn ($state) => Deadline::STATUSES[$state] ?? $state),
 
                         Infolists\Components\TextEntry::make('priority')
                             ->label('Prioridade')
                             ->badge()
-                            ->color(fn ($record) => $record->priority_color)
+                            ->color(fn ($record) => $record?->priority_color)
                             ->formatStateUsing(fn ($state) => Deadline::PRIORITIES[$state] ?? $state),
 
                         Infolists\Components\TextEntry::make('assignedUser.name')

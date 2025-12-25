@@ -51,7 +51,7 @@ class ClientTransactionsWidget extends BaseWidget
                     ->label('Valor')
                     ->money('BRL')
                     ->sortable()
-                    ->color(fn ($record) => $record->type === 'income' ? 'success' : 'danger'),
+                    ->color(fn ($record) => $record?->type === 'income' ? 'success' : 'danger'),
 
                 Tables\Columns\TextColumn::make('paymentMethod.name')
                     ->label('Forma Pagamento')

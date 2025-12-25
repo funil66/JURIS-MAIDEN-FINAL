@@ -474,8 +474,8 @@ class ServiceResource extends Resource
                     ->label('Prazo')
                     ->date('d/m/Y')
                     ->sortable()
-                    ->color(fn ($record) => $record->isOverdue() ? 'danger' : null)
-                    ->icon(fn ($record) => $record->isOverdue() ? 'heroicon-o-exclamation-triangle' : null),
+                    ->color(fn ($record) => $record?->isOverdue() ? 'danger' : null)
+                    ->icon(fn ($record) => $record?->isOverdue() ? 'heroicon-o-exclamation-triangle' : null),
 
                 Tables\Columns\TextColumn::make('scheduled_datetime')
                     ->label('Agendamento')

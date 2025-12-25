@@ -266,14 +266,14 @@ class TransactionResource extends Resource
                     ->label('Valor')
                     ->money('BRL')
                     ->sortable()
-                    ->color(fn ($record) => $record->type === 'income' ? 'success' : 'danger'),
+                    ->color(fn ($record) => $record?->type === 'income' ? 'success' : 'danger'),
 
                 Tables\Columns\TextColumn::make('due_date')
                     ->label('Vencimento')
                     ->date('d/m/Y')
                     ->sortable()
-                    ->color(fn ($record) => $record->isOverdue() ? 'danger' : null)
-                    ->icon(fn ($record) => $record->isOverdue() ? 'heroicon-o-exclamation-triangle' : null),
+                    ->color(fn ($record) => $record?->isOverdue() ? 'danger' : null)
+                    ->icon(fn ($record) => $record?->isOverdue() ? 'heroicon-o-exclamation-triangle' : null),
 
                 Tables\Columns\TextColumn::make('paid_date')
                     ->label('Pago em')
