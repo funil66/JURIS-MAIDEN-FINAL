@@ -289,6 +289,7 @@ class ProceedingResource extends Resource
                     ->label('Processo')
                     ->limit(30)
                     ->searchable()
+                    ->formatStateUsing(fn ($record) => $record?->process?->title ?? '')
                     ->default('')
                     ->toggleable(),
 
@@ -324,6 +325,7 @@ class ProceedingResource extends Resource
 
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Registrado por')
+                    ->formatStateUsing(fn ($record) => $record?->user?->name ?? '')
                     ->default('')
                     ->toggleable(isToggledHiddenByDefault: true),
 
