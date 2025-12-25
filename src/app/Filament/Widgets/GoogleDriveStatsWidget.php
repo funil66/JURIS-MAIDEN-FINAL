@@ -40,13 +40,13 @@ class GoogleDriveStatsWidget extends BaseWidget
                 ->description('Sincronizados com sucesso')
                 ->descriptionIcon('heroicon-o-check-circle')
                 ->color('success')
-                ->url(route('filament.admin.resources.google-drive-files.index')),
+                ->url(route('filament.funil.resources.google-drive-files.index')),
 
             Stat::make('⏳ Pendentes', $pendingFiles)
                 ->description('Aguardando sincronização')
                 ->descriptionIcon('heroicon-o-clock')
                 ->color($pendingFiles > 0 ? 'warning' : 'success')
-                ->url(route('filament.admin.resources.google-drive-files.index') . '?activeTab=pending'),
+                ->url(route('filament.funil.resources.google-drive-files.index') . '?activeTab=pending'),
 
             Stat::make('💾 Espaço Usado', $formattedSize)
                 ->description('No Google Drive')
@@ -56,7 +56,7 @@ class GoogleDriveStatsWidget extends BaseWidget
             Stat::make('🔄 Última Sync', $settings->last_sync_at?->diffForHumans() ?? 'Nunca')
                 ->description($settings->last_error ? '⚠️ Com erros' : '✅ Sem erros')
                 ->color($settings->last_error ? 'danger' : 'success')
-                ->url(route('filament.admin.pages.google-drive-settings')),
+                ->url(route('filament.funil.pages.google-drive-settings')),
         ];
     }
 

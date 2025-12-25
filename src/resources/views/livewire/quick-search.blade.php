@@ -65,7 +65,7 @@
             {{-- Rodapé --}}
             <div class="px-4 py-2 bg-gray-50 dark:bg-gray-800/50 border-t border-gray-200 dark:border-gray-700">
                 <a 
-                    href="{{ route('filament.admin.pages.global-search', ['query' => $query]) }}"
+                    href="{{ route('filament.funil.pages.global-search', ['query' => $query]) }}"
                     class="text-sm text-primary-600 hover:text-primary-700 flex items-center justify-center"
                 >
                     Ver todos os resultados
@@ -83,7 +83,7 @@
                 Nenhum resultado para "{{ $query }}"
             </p>
             <a 
-                href="{{ route('filament.admin.pages.global-search', ['query' => $query]) }}"
+                href="{{ route('filament.funil.pages.global-search', ['query' => $query]) }}"
                 class="mt-2 inline-block text-sm text-primary-600 hover:underline"
             >
                 Busca avançada →

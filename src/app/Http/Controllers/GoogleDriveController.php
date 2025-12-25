@@ -30,14 +30,14 @@ class GoogleDriveController extends Controller
             ]);
 
             return redirect()
-                ->route('filament.admin.pages.google-drive-settings')
+                ->route('filament.funil.pages.google-drive-settings')
                 ->with('error', 'Erro na autenticação: ' . $request->get('error_description', 'Erro desconhecido'));
         }
 
         // Verificar se temos o código de autorização
         if (!$request->has('code')) {
             return redirect()
-                ->route('filament.admin.pages.google-drive-settings')
+                ->route('filament.funil.pages.google-drive-settings')
                 ->with('error', 'Código de autorização não recebido');
         }
 
@@ -47,11 +47,11 @@ class GoogleDriveController extends Controller
 
             if ($success) {
                 return redirect()
-                    ->route('filament.admin.pages.google-drive-settings')
+                    ->route('filament.funil.pages.google-drive-settings')
                     ->with('success', 'Google Drive conectado com sucesso!');
             } else {
                 return redirect()
-                    ->route('filament.admin.pages.google-drive-settings')
+                    ->route('filament.funil.pages.google-drive-settings')
                     ->with('error', 'Falha ao conectar com o Google Drive');
             }
         } catch (\Exception $e) {
@@ -61,7 +61,7 @@ class GoogleDriveController extends Controller
             ]);
 
             return redirect()
-                ->route('filament.admin.pages.google-drive-settings')
+                ->route('filament.funil.pages.google-drive-settings')
                 ->with('error', 'Erro ao processar autenticação: ' . $e->getMessage());
         }
     }
@@ -75,7 +75,7 @@ class GoogleDriveController extends Controller
         $service->disconnect();
 
         return redirect()
-            ->route('filament.admin.pages.google-drive-settings')
+            ->route('filament.funil.pages.google-drive-settings')
             ->with('success', 'Google Drive desconectado com sucesso');
     }
 }

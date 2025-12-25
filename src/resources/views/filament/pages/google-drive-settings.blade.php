@@ -263,7 +263,7 @@ GOOGLE_REDIRECT_URI={{ config('app.url') }}/google/callback</pre>
 
                 <div class="mt-4 text-center">
                     <a 
-                        href="{{ route('filament.admin.resources.google-drive-files.index') }}" 
+                        href="{{ route('filament.funil.resources.google-drive-files.index') }}" 
                         class="text-sm text-primary-600 hover:underline"
                     >
                         Ver todos os arquivos →

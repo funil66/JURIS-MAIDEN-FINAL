@@ -826,8 +826,9 @@ class CourtApiService
 
         // Buscar processo pelo número
         if (!$processId && $movement->process_number) {
+            $clean = preg_replace('/[^0-9]/', '', $movement->process_number);
             $process = \App\Models\Process::query()
-                ->where('number', 'like', '%' . preg_replace('/[^0-9]/', '', $movement->process_number) . '%')
+                ->byNumber($clean)
                 ->first();
 
             $processId = $process?->id;

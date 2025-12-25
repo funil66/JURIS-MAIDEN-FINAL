@@ -228,8 +228,9 @@ class CourtMovementResource extends Resource
                                     $cleanNumber = preg_replace('/[^0-9]/', '', $record->process_number);
                                     
                                     return Process::query()
-                                        ->where('number', 'like', "%{$cleanNumber}%")
+                                        ->byNumber($cleanNumber)
                                         ->limit(10)
+                                        ->get()
                                         ->pluck('number', 'id');
                                 })
                                 ->searchable()

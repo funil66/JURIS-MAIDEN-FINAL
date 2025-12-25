@@ -317,14 +317,14 @@ class DiligenceResource extends Resource
                 Tables\Columns\TextColumn::make('priority')
                     ->label('')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                    ->formatStateUsing(fn (?string $state): string => $state ? match ($state) {
                         'urgent' => '!!!',
                         'high' => '!!',
                         'normal' => '',
                         'low' => '',
                         default => '',
-                    })
-                    ->color(fn (string $state): string => match ($state) {
+                    } : '')
+                    ->color(fn (?string $state): string => match ($state) {
                         'urgent' => 'danger',
                         'high' => 'warning',
                         default => 'gray',
@@ -346,8 +346,8 @@ class DiligenceResource extends Resource
                 Tables\Columns\TextColumn::make('type')
                     ->label('Tipo')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => Diligence::getTypeOptions()[$state] ?? $state)
-                    ->color(fn (string $state): string => match ($state) {
+                    ->formatStateUsing(fn (?string $state): string => $state ? (Diligence::getTypeOptions()[$state] ?? $state) : '-')
+                    ->color(fn (?string $state): string => match ($state) {
                         'hearing', 'court_hearing' => 'danger',
                         'forum_visit', 'registry_visit' => 'info',
                         'document_pickup', 'document_delivery' => 'success',
@@ -386,8 +386,8 @@ class DiligenceResource extends Resource
                 Tables\Columns\TextColumn::make('status')
                     ->label('Status')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => Diligence::getStatusOptions()[$state] ?? $state)
-                    ->color(fn (string $state): string => match ($state) {
+                    ->formatStateUsing(fn (?string $state): string => $state ? (Diligence::getStatusOptions()[$state] ?? $state) : '-')
+                    ->color(fn (?string $state): string => match ($state) {
                         'pending' => 'warning',
                         'scheduled' => 'info',
                         'in_progress' => 'primary',

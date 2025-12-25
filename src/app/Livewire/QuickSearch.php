@@ -64,7 +64,7 @@ class QuickSearch extends Component
 
     public function goToFullSearch(): void
     {
-        $this->redirect(route('filament.admin.pages.global-search', ['query' => $this->query]));
+        $this->redirect(route('filament.funil.pages.global-search', ['query' => $this->query]));
     }
 
     public function close(): void

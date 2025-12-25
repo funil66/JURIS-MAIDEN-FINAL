@@ -246,6 +246,28 @@ class Process extends Model
         return $query->where('responsible_user_id', $userId);
     }
 
+    /**
+     * Busca por número (CNJ / antigo / internal_code)
+     */
+    public function scopeByNumber($query, string $value)
+    {
+        $clean = preg_replace('/[^0-9]/', '', $value);
+
+        return $query->where(function ($q) use ($clean) {
+            $q->where('cnj_number', 'like', "%{$clean}%")
+                ->orWhere('old_number', 'like', "%{$clean}%")
+                ->orWhere('internal_code', 'like', "%{$clean}%");
+        });
+    }
+
+    /**
+     * Acessor genérico para `number` (compatibilidade com views/relations)
+     */
+    public function getNumberAttribute(): ?string
+    {
+        return $this->cnj_number ?? $this->old_number ?? $this->internal_code ?? null;
+    }
+
     // ==========================================
     // MÉTODOS AUXILIARES
     // ==========================================

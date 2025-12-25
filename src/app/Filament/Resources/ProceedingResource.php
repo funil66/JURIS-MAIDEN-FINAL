@@ -269,8 +269,8 @@ class ProceedingResource extends Resource
                 Tables\Columns\TextColumn::make('type')
                     ->label('Tipo')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => Proceeding::getTypeOptions()[$state] ?? $state)
-                    ->color(fn (string $state): string => match ($state) {
+                    ->formatStateUsing(fn (?string $state): string => $state ? (Proceeding::getTypeOptions()[$state] ?? $state) : '-')
+                    ->color(fn (?string $state): string => match ($state) {
                         'decision', 'sentence' => 'success',
                         'deadline', 'citation' => 'warning',
                         'appeal', 'petition' => 'info',
@@ -307,8 +307,8 @@ class ProceedingResource extends Resource
                 Tables\Columns\TextColumn::make('status')
                     ->label('Status')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => Proceeding::getStatusOptions()[$state] ?? $state)
-                    ->color(fn (string $state): string => match ($state) {
+                    ->formatStateUsing(fn (?string $state): string => $state ? (Proceeding::getStatusOptions()[$state] ?? $state) : '-')
+                    ->color(fn (?string $state): string => match ($state) {
                         'pending' => 'warning',
                         'analyzed' => 'info',
                         'actioned' => 'success',
@@ -318,7 +318,7 @@ class ProceedingResource extends Resource
 
                 Tables\Columns\TextColumn::make('source')
                     ->label('Fonte')
-                    ->formatStateUsing(fn (string $state): string => Proceeding::getSourceOptions()[$state] ?? $state)
+                    ->formatStateUsing(fn (?string $state): string => $state ? (Proceeding::getSourceOptions()[$state] ?? $state) : '-')
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 Tables\Columns\TextColumn::make('user.name')
@@ -353,6 +353,11 @@ class ProceedingResource extends Resource
 
                 Tables\Filters\TernaryFilter::make('has_deadline')
                     ->label('Com Prazo'),
+
+                // Compatibilidade: filtro legado 'is_deadline' usado em URLs/links externos
+                Tables\Filters\TernaryFilter::make('is_deadline')
+                    ->label('Com Prazo (legacy)')
+                    ->query(fn (Builder $query, $value) => $query->where('has_deadline', $value)),
 
                 Tables\Filters\TernaryFilter::make('deadline_completed')
                     ->label('Prazo Cumprido'),
