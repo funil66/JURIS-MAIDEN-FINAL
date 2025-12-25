@@ -336,7 +336,7 @@ class DiligenceResource extends Resource
                     ->label('Data')
                     ->date('d/m/Y')
                     ->sortable()
-                    ->color(fn ($record) => $record->is_overdue ? 'danger' : null),
+                    ->color(fn ($record) => $record?->is_overdue ? 'danger' : null),
 
                 Tables\Columns\TextColumn::make('scheduled_time')
                     ->label('Hora')
@@ -358,7 +358,7 @@ class DiligenceResource extends Resource
                     ->label('Título')
                     ->limit(40)
                     ->searchable()
-                    ->tooltip(fn ($record) => $record->title),
+                    ->tooltip(fn ($record) => $record?->title),
 
                 Tables\Columns\TextColumn::make('process.title')
                     ->label('Processo')
