@@ -40,12 +40,32 @@
     align-items: center;
 }
 
-/* Accent highlights */
+/* Accent highlights - use brand color more widely */
+:root{ --juris-gold: #CBA135; }
+
 .filament-button, .filament-actions-button, .filament-modal .filament-button {
     background-color: var(--juris-gold) !important;
     border-color: var(--juris-gold) !important;
     color: #111827 !important;
 }
+
+/* Dashboard stat cards accent */
+.fi-wi-stats-overview-stat::before {
+    background: linear-gradient(90deg, var(--juris-gold) 0%, color-mix(in srgb, var(--juris-gold) 80%, #fff) 100%);
+}
+
+/* Highlight primary links and shortcuts with brand gold */
+.filament-global-search__shortcut, .filament-sidebar-item-active {
+    background: linear-gradient(135deg, rgba(203,161,53,0.12), rgba(203,161,53,0.06));
+    border-left-color: var(--juris-gold) !important;
+}
+
+/* Info card titles */
+.fi-wi-stats-overview-stat-title {
+    color: var(--juris-gold) !important;
+    font-weight: 700 !important;
+}
+
 
 
 /* ========================================
