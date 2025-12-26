@@ -13,8 +13,16 @@ Route::get('/', function () {
 Route::view('/about', 'about')->name('about');
 Route::view('/contact', 'contact')->name('contact');
 Route::post('/contact/send', function(\Illuminate\Http\Request $request){
-    // Minimal contact handler: validate and log for now
     $data = $request->validate(["name"=>"required","email"=>"required|email","message"=>"required"]);
+
+    // Send contact email to office
+    try {
+        \Mail::to(config('juris.emails.contact'))->send(new \App\Mail\ContactSubmitted($data));
+    } catch (\Exception $e) {
+        \Log::error('Contact email failed', ['error' => $e->getMessage(), 'data' => $data]);
+        return back()->with('status','Ocorreu um erro ao enviar. Por favor, tente novamente mais tarde.');
+    }
+
     \Log::info('Contact form submitted', $data);
     return back()->with('status','Mensagem enviada. Entraremos em contato em breve.');
 })->name('contact.send');
