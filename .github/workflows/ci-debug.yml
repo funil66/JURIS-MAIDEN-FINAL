@@ -36,28 +36,31 @@ jobs:
 
       - name: Prepare .env
         run: |
-          cp src/.env.example src/.env || true
-          php -r "file_exists('src/.env') || copy('src/.env.example','src/.env');"
-          echo "DB_CONNECTION=sqlite" >> src/.env
-          echo "DB_DATABASE=:memory:" >> src/.env
-        working-directory: .
+          cp .env.example .env || true
+          php -r "file_exists('.env') || copy('.env.example','.env');"
+          echo "DB_CONNECTION=sqlite" >> .env
+          echo "DB_DATABASE=:memory:" >> .env
+        working-directory: src
 
       - name: Show important files
         run: |
-          echo "--- src/.env ---" > /tmp/src-files.log
-          sed -n '1,200p' src/.env >> /tmp/src-files.log || true
-          echo "--- src/composer.json ---" >> /tmp/src-files.log
-          sed -n '1,200p' src/composer.json >> /tmp/src-files.log || true
+          echo "--- .env ---" > /tmp/src-files.log
+          sed -n '1,200p' .env >> /tmp/src-files.log || true
+          echo "--- composer.json ---" >> /tmp/src-files.log
+          sed -n '1,200p' composer.json >> /tmp/src-files.log || true
+        working-directory: src
 
       - name: Run migrations (debug)
         run: |
           set -x
-          php src/artisan migrate --force --env=testing 2>&1 | tee /tmp/migrate.log
+          php artisan migrate --force --env=testing 2>&1 | tee /tmp/migrate.log
+        working-directory: src
 
       - name: Run tests (debug)
         run: |
           set -x
-          composer test --no-interaction --working-dir=src 2>&1 | tee /tmp/test.log
+          composer test --no-interaction --working-dir=. 2>&1 | tee /tmp/test.log
+        working-directory: src
 
       - name: Upload logs
         uses: actions/upload-artifact@v4
