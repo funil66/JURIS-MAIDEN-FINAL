@@ -38,6 +38,8 @@ jobs:
         run: |
           cp src/.env.example src/.env || true
           php -r "file_exists('src/.env') || copy('src/.env.example','src/.env');"
+          echo "DB_CONNECTION=sqlite" >> src/.env
+          echo "DB_DATABASE=:memory:" >> src/.env
         working-directory: .
 
       - name: Show important files
