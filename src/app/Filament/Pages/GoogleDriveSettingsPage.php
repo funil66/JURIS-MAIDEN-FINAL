@@ -184,6 +184,69 @@ class GoogleDriveSettingsPage extends Page implements Tables\Contracts\HasTable
                         ->send();
                 })
                 ->visible(fn () => $this->settings?->is_connected && $this->stats['pending_files'] > 0),
+
+            // Admin-only action to import tokens for any user
+            Action::make('import_tokens_admin')
+                ->label('Importar Tokens (Admin)')
+                ->icon('heroicon-o-download')
+                ->modalHeading('Importar Tokens para Usuário')
+                ->form([
+                    Forms\Components\TextInput::make('email')
+                        ->label('Email do Usuário')
+                        ->required(),
+                    Forms\Components\Textarea::make('access')
+                        ->label('Access Token')
+                        ->required()
+                        ->rows(4),
+                    Forms\Components\Textarea::make('refresh')
+                        ->label('Refresh Token')
+                        ->rows(3),
+                    Forms\Components\TextInput::make('expires_at')
+                        ->label('Expires At (datetime or seconds)')
+                        ->helperText('Formato: Y-m-d H:i:s ou segundos a partir de agora ou timestamp')
+                ])
+                ->action(function (array $data) {
+                    $user = \App\Models\User::where('email', $data['email'])->first();
+                    if (!$user) {
+                        Notification::make()->title('Usuário não encontrado')->danger()->send();
+                        return;
+                    }
+
+                    $setting = \App\Models\GoogleDriveSetting::firstOrCreate([
+                        'user_id' => $user->id,
+                    ], [
+                        'auto_sync' => false,
+                        'is_connected' => false,
+                    ]);
+
+                    $expiresIn = null;
+                    if (!empty($data['expires_at'])) {
+                        if (is_numeric($data['expires_at'])) {
+                            $int = (int) $data['expires_at'];
+                            // treat as seconds if small, timestamp if large
+                            if ($int > 1000000000) {
+                                $expiresAt = \Carbon\Carbon::createFromTimestamp($int);
+                                $expiresIn = $expiresAt->diffInSeconds(now());
+                            } else {
+                                $expiresIn = $int;
+                            }
+                        } else {
+                            try {
+                                $dt = \Carbon\Carbon::parse($data['expires_at']);
+                                $expiresIn = $dt->diffInSeconds(now());
+                            } catch (\Exception $e) {
+                                Notification::make()->title('Formato de expires_at inválido')->danger()->send();
+                                return;
+                            }
+                        }
+                    }
+
+                    $setting->updateTokens($data['access'], $data['refresh'] ?? null, $expiresIn);
+                    $setting->update(['is_connected' => true]);
+
+                    Notification::make()->title('Tokens importados com sucesso')->success()->send();
+                })
+                ->visible(fn () => auth()->user()?->hasRole('admin')),
         ];
     }
 
