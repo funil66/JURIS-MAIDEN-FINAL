@@ -1,6 +1,6 @@
-# ⚖️ LogísticaJus
+# ⚖️ JURIS MAIDEN
 
-**Sistema de Gestão para Advogados Correspondentes**
+**Sistema de Gestão Jurídica — JURIS MAIDEN (Allisson Sousa Advocacia)**
 
 Um sistema completo para organização de trabalho de advogados correspondentes jurídicos, incluindo gerenciamento de clientes, serviços, agenda, financeiro e relatórios.
 
