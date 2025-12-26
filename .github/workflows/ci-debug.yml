@@ -57,12 +57,7 @@ jobs:
         working-directory: src
 
       - name: Run tests (debug)
-        run: |
-          set -x
-          php --version
-          composer --version
-          ls -la
-        working-directory: src
+        run: echo "Hello World"
 
       - name: Upload logs
         uses: actions/upload-artifact@v4
