@@ -33,6 +33,7 @@ class GoogleTokensTest extends TestCase
             '--access' => $access,
             '--refresh' => $refresh,
             '--expires_at' => 3600,
+            '--force' => true,
         ])->assertExitCode(0);
 
         $setting = GoogleDriveSetting::where('user_id', $user->id)->first();
