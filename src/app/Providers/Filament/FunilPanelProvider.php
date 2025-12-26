@@ -31,10 +31,12 @@ class FunilPanelProvider extends PanelProvider
             ->path('funil')
             ->login()
             ->profile()
-            ->brandName('LogísticaJus')
+            ->brandName('JURIS MAIDEN')
+            ->brandLogo(asset('img/juris-logo.png'))
+            ->darkModeBrandLogo(asset('img/juris-logo.png'))
             ->favicon(asset('favicon.ico'))
             ->colors([
-                'primary' => Color::Indigo,
+                'primary' => Color::Amber,
                 'success' => Color::Emerald,
                 'warning' => Color::Amber,
                 'danger' => Color::Rose,
@@ -43,8 +45,11 @@ class FunilPanelProvider extends PanelProvider
             ])
             ->font('Inter')
             ->darkMode(true)
-            ->darkModeBrandLogo(null)
             ->sidebarCollapsibleOnDesktop()
+            ->renderHook(
+                PanelsRenderHook::TOPBAR_AFTER,
+                fn (): string => \Illuminate\Support\Facades\Blade::render('<div class="juris-topbar-info px-4">' . config('juris.office_name') . ' • <a href="tel:' . config('juris.phone') . '">' . config('juris.phone') . '</a></div>')
+            )
             ->sidebarFullyCollapsibleOnDesktop()
             ->maxContentWidth('full')
             ->databaseNotifications()

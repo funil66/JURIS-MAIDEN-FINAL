@@ -1,8 +1,13 @@
 /**
- * LogísticaJus - Tema Moderno
- * Paleta: Indigo (primário), Emerald (sucesso), Rose (perigo), Amber (alerta)
- * Design: Bordas arredondadas, sombras suaves, transições fluidas
+ * JURIS MAIDEN - Branding layer (adapted from Allisson Sousa site)
+ * Primary brand color: #CBA135 (gold)
+ * Office: Allisson Sousa Advocacia — will appear in footers and topbar
  */
+
+/* Juris brand variable */
+:root {
+    --juris-gold: #CBA135;
+}
 
 /* ========================================
    CSS VARIABLES - TEMA CUSTOMIZADO
@@ -20,6 +25,28 @@
     --radius-medium: 1.25rem;
     --radius-large: 1.5rem;
 }
+
+/* Small Filament-specific overrides for JURIS MAIDEN */
+.filament-sidebar-brand .filament-sidebar-brand__logo img {
+    max-height: 36px !important;
+    object-fit: contain;
+}
+
+.filament-topbar .juris-topbar-info {
+    color: var(--slate-500, #6b7280);
+    font-size: .9rem;
+    display: inline-flex;
+    gap: .6rem;
+    align-items: center;
+}
+
+/* Accent highlights */
+.filament-button, .filament-actions-button, .filament-modal .filament-button {
+    background-color: var(--juris-gold) !important;
+    border-color: var(--juris-gold) !important;
+    color: #111827 !important;
+}
+
 
 /* ========================================
    BOTÕES - MODERNIZADOS
