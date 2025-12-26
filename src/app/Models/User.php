@@ -93,7 +93,8 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
      */
     public function canAccessPanel(Panel $panel): bool
     {
-        return $this->is_active;
+        // Ensure a boolean is always returned (avoid null)
+        return (bool) $this->is_active;
     }
 
     /**
