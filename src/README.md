@@ -57,3 +57,11 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+---
+
+## Project commands
+
+- `php artisan google:tokens` — helper to set Google access/refresh tokens for a given user. Useful for recovery or manual setup.
+  - Options: `--email=`, `--access=`, `--refresh=`, `--expires_at=` (timestamp/date/seconds), `--file=` (path to JSON with `access_token`, `refresh_token`, `expires_at`/`expires_in`), `--force` to skip confirmation.
+  - Example: `php artisan google:tokens --email=admin@example.com --file=/tmp/tokens.json --force`
