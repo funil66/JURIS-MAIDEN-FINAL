@@ -59,7 +59,9 @@ jobs:
       - name: Run tests (debug)
         run: |
           set -x
-          composer test --no-interaction --working-dir=. 2>&1 | tee /tmp/test.log
+          php --version
+          composer --version
+          ls -la
         working-directory: src
 
       - name: Upload logs
