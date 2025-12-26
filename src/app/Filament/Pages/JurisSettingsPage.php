@@ -18,6 +18,25 @@ class JurisSettingsPage extends Page implements Forms\Contracts\HasForms
     protected static ?int $navigationSort = 32;
     protected static string $view = 'filament.pages.juris-settings';
 
+    protected function getHeaderActions(): array
+    {
+        return [
+            Forms\Components\Actions\Action::make('export')
+                ->label('Exportar')
+                ->action('export')
+                ->visible(fn () => auth()->user()?->hasRole('admin')),
+
+            Forms\Components\Actions\Action::make('import')
+                ->label('Importar')
+                ->modalHeading('Importar configurações (conteúdo encriptado)')
+                ->form([
+                    Forms\Components\Textarea::make('content')->label('Conteúdo criptografado')->rows(6)->required(),
+                ])
+                ->action(fn (array $data) => $this->import($data))
+                ->visible(fn () => auth()->user()?->hasRole('admin')),
+        ];
+    }
+
     public $office_name;
     public $phone;
     public $whatsapp;
@@ -68,5 +87,39 @@ class JurisSettingsPage extends Page implements Forms\Contracts\HasForms
         $s->update($data);
 
         Notification::make()->title('Configurações salvas')->success()->send();
+    }
+
+    // Export settings to encrypted file and return path
+    public function export(): void
+    {
+        $s = JurisSetting::firstOrMakeFromConfig();
+        $payload = json_encode($s->toArray());
+        $encrypted = encrypt($payload);
+        $path = 'juris-settings-' . now()->format('YmdHis') . '.json.enc';
+        \Illuminate\Support\Facades\Storage::put($path, $encrypted);
+
+        Notification::make()->title('Export gerado')->body("Arquivo: {$path}")->success()->send();
+    }
+
+    // Import from pasted encrypted content
+    public function import(array $data): void
+    {
+        if (empty($data['content'])) {
+            Notification::make()->title('Conteúdo vazio')->danger()->send();
+            return;
+        }
+
+        try {
+            $json = decrypt($data['content']);
+            $payload = json_decode($json, true);
+        } catch (\Exception $e) {
+            Notification::make()->title('Falha ao importar')->danger()->send();
+            return;
+        }
+
+        $s = JurisSetting::firstOrMakeFromConfig();
+        $s->update($payload);
+
+        Notification::make()->title('Importado com sucesso')->success()->send();
     }
 }
