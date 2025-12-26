@@ -9,6 +9,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Public pages (About / Contact)
+Route::view('/about', 'about')->name('about');
+Route::view('/contact', 'contact')->name('contact');
+Route::post('/contact/send', function(\Illuminate\Http\Request $request){
+    // Minimal contact handler: validate and log for now
+    $data = $request->validate(["name"=>"required","email"=>"required|email","message"=>"required"]);
+    \Log::info('Contact form submitted', $data);
+    return back()->with('status','Mensagem enviada. Entraremos em contato em breve.');
+})->name('contact.send');
+
 // Google Calendar OAuth Routes
 Route::middleware(['web', 'auth'])->prefix('funil')->group(function () {
     Route::get('/google-calendar/callback', [GoogleCalendarController::class, 'callback'])
