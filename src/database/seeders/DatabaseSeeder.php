@@ -15,11 +15,53 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // Users and roles
+        // Note: seeded passwords are for development purposes only and are hashed with bcrypt
+        \Spatie\Permission\Models\Role::firstOrCreate(['name' => 'admin']);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        $users = [
+            [
+                'name' => 'Allisson Gonçalves de Sousa',
+                'email' => 'allisson@stofgard.com',
+                'password' => 'Swordfish',
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Maria de Jesus Silva',
+                'email' => 'maria@stofgard.com',
+                'password' => 'Stofgard',
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Jaelsa Maria Silva',
+                'email' => 'jaelsa@stofgard.com',
+                'password' => 'Stofgard',
+                'is_active' => true,
+            ],
+            [
+                'name' => 'Raelcia Maria Silva',
+                'email' => 'raelcia@stofgard.com',
+                'password' => 'Stofgard',
+                'is_active' => true,
+            ],
+        ];
+
+        foreach ($users as $u) {
+            $user = User::updateOrCreate(
+                ['email' => $u['email']],
+                [
+                    'name' => $u['name'],
+                    'password' => bcrypt($u['password']),
+                    'is_active' => $u['is_active'],
+                ]
+            );
+
+            if ($user->email === 'allisson@stofgard.com') {
+                $user->assignRole('admin');
+            }
+        }
+
+        // Create placeholder for Google Drive integration settings
+        $this->call(GoogleIntegrationSeeder::class);
     }
 }

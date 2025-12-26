@@ -94,7 +94,7 @@ class TimeEntryResource extends Resource
                             ->label('Serviço Relacionado')
                             ->relationship(
                                 'service',
-                                'title',
+                                'description',
                                 fn (Builder $query, Get $get) => $get('process_id') 
                                     ? $query->where('process_id', $get('process_id'))
                                     : $query

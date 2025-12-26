@@ -8,6 +8,7 @@ use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Resources\Components\Tab;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Contracts\View\View;
 
 class ListDiligences extends ListRecords
 {
@@ -18,6 +19,11 @@ class ListDiligences extends ListRecords
         return [
             Actions\CreateAction::make(),
         ];
+    }
+
+    protected function getTableContentView(): ?View
+    {
+        return view('filament.resources.diligences.grid');
     }
 
     public function getTabs(): array

@@ -2,7 +2,7 @@
 // LogísticaJus - Service Worker para PWA
 // ============================================
 
-const CACHE_NAME = 'logisticajus-v1';
+const CACHE_NAME = 'juris-maiden-v1';
 const OFFLINE_URL = '/offline.html';
 
 // Arquivos para cache inicial

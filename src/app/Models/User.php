@@ -12,10 +12,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements FilamentUser, HasAvatar
 {
-    use HasFactory, Notifiable, LogsActivity, HasGlobalUid;
+    use HasFactory, Notifiable, LogsActivity, HasGlobalUid, HasRoles;
 
     /**
      * Prefixo do UID para Usuários

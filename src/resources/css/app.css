@@ -19,3 +19,40 @@
     transform: translateY(-6px);
     box-shadow: 0 14px 34px rgba(2,6,23,0.08);
 }
+
+/* Modern UI: card, icon, and tablet menu styles */
+.dashboard-icon-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--tw-bg-opacity, #fff);
+    border-radius: 1rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    padding: 2rem 1rem;
+    transition: background 0.2s, box-shadow 0.2s;
+}
+.dashboard-icon-card:hover {
+    background: #f3f4f6;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+}
+.dashboard-icon-card .icon {
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: 0.5rem;
+    color: #6366f1;
+}
+.dashboard-icon-card span {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+@media (max-width: 768px) {
+    .dashboard-icon-card {
+        padding: 1rem 0.5rem;
+    }
+    .dashboard-icon-card .icon {
+        width: 2rem;
+        height: 2rem;
+    }
+}

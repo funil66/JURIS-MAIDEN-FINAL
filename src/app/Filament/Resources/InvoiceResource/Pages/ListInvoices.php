@@ -8,6 +8,7 @@ use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Resources\Components\Tab;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Contracts\View\View;
 
 class ListInvoices extends ListRecords
 {
@@ -25,6 +26,11 @@ class ListInvoices extends ListRecords
                 ->color('info')
                 ->url(route('filament.funil.resources.invoices.create-from-time')),
         ];
+    }
+
+    protected function getTableContentView(): ?View
+    {
+        return view('filament.resources.invoices.grid');
     }
 
     public function getTabs(): array

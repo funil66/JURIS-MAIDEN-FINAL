@@ -329,7 +329,7 @@ class DiligenceResource extends Resource
                         'high' => 'warning',
                         default => 'gray',
                     })
-                    ->visible(fn ($state) => in_array($state, ['urgent', 'high']))
+                    ->visible(fn ($record) => in_array($record?->priority, ['urgent', 'high']))
                     ->width(30),
 
                 Tables\Columns\TextColumn::make('scheduled_date')
@@ -516,14 +516,14 @@ class DiligenceResource extends Resource
                         ->label('Iniciar')
                         ->icon('heroicon-o-play')
                         ->color('primary')
-                        ->visible(fn ($record) => in_array($record->status, ['pending', 'scheduled']))
+                        ->visible(fn ($record) => $record && in_array($record->status, ['pending', 'scheduled']))
                         ->requiresConfirmation()
                         ->action(fn ($record) => $record->start()),
                     Tables\Actions\Action::make('complete')
                         ->label('Concluir')
                         ->icon('heroicon-o-check-circle')
                         ->color('success')
-                        ->visible(fn ($record) => $record->status === 'in_progress')
+                        ->visible(fn ($record) => $record?->status === 'in_progress')
                         ->form([
                             Forms\Components\Toggle::make('was_successful')
                                 ->label('Foi Bem Sucedida')
@@ -537,7 +537,7 @@ class DiligenceResource extends Resource
                         ->label('Cancelar')
                         ->icon('heroicon-o-x-circle')
                         ->color('danger')
-                        ->visible(fn ($record) => in_array($record->status, Diligence::getActiveStatuses()))
+                        ->visible(fn ($record) => $record && in_array($record->status, Diligence::getActiveStatuses()))
                         ->requiresConfirmation()
                         ->form([
                             Forms\Components\Textarea::make('reason')

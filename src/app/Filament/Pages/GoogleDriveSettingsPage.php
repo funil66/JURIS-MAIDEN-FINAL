@@ -31,7 +31,7 @@ class GoogleDriveSettingsPage extends Page implements Tables\Contracts\HasTable
 
     public ?array $data = [];
     public ?GoogleDriveSetting $settings = null;
-    public ?GoogleDriveService $driveService = null;
+    protected ?GoogleDriveService $driveService = null;
     public array $stats = [];
     public string $activeTab = 'connection';
 

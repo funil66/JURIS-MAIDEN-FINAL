@@ -5,6 +5,7 @@ namespace App\Filament\Resources\ClientResource\Pages;
 use App\Filament\Resources\ClientResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
+use Illuminate\Contracts\View\View;
 
 class ListClients extends ListRecords
 {
@@ -15,5 +16,10 @@ class ListClients extends ListRecords
         return [
             Actions\CreateAction::make(),
         ];
+    }
+
+    protected function getTableContentView(): ?View
+    {
+        return view('filament.resources.clients.grid');
     }
 }
